@@ -1,0 +1,29 @@
+create temporary tablespace hgbh_temp 
+tempfile '\home\oracle\data\hgbh_temp01.dbf' 
+size 32m 
+autoextend on 
+next 32m maxsize 2048m 
+extent management local; 
+
+create tablespace hgbh_data 
+logging 
+datafile '\home\oracle\data\hgbh_data01.dbf' 
+size 32m 
+autoextend on 
+next 32m maxsize 2048m 
+extent management local; 
+
+create user hgbh identified by "123"
+default tablespace hgbh_data 
+temporary tablespace hgbh_temp; 
+
+grant RESOURCE,CONNECT,DBA to hgbh;
+
+
+将数据库中system用户与sys用户的表导出(包括表结构和数据)
+ 
+exp sys/pass@orcl file=d:\data.dmp owner=(system,sys)
+
+将D:\data.dmp 中的数据导入 TEST数据库中
+
+imp sys/pass@orcl full=y file= d:\data.dmp ignore=y(full=y导入时包括表结构和数据)

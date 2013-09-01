@@ -1,0 +1,79 @@
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td { margin: 0; padding: 0; }
+
+body {text-align: left; font-family: Helvetica, Tahoma, Arial, sans-serif;font-size: 14px;line-height: 1.5; color: black;}
+
+img {border: 0;}
+
+body { margin: 0; padding: 0; background: white; text-align: center;}
+
+body { display: block;}
+
+div#page { width: 950px; margin:  0 auto; margin-top: 5px; padding: 0; background: white; text-align: center; clear:both; height:100%; overflow:hidden;}
+
+div#header { position: relative; height:200px; /*168*/ margin-left: auto; margin-right: auto; background-image: url(/bpps/attached/image/sysimg/head_background.jpg);}
+
+div#headerLogo { text-align: center; color: black; font-size: large; height:168px; border-bottom: 0px;}
+
+div#headerNav { text-align: left; padding: 0; margin: 0; color: black;}
+
+div#headerNav span{vertical-align: bottom; margin-left: 10px;margin-right: 10px;}
+
+div#headerNav span a{font-size: 22px;}
+
+table#mainTable{ margin-top: 5px; margin-left: auto; margin-right: auto; border:0px solid gray; border-collapse: collapse; color:black; background-color: white; overflow:auto;}
+table#mainTable tr td{vertical-align: top;}
+
+div#mainLeft { width: 180px; height:auto; text-align: left; padding: 0; margin: 0; color: black; background-color: white; border:1px solid gray;}
+div#login { width: 175px; height:150px; text-align: left; padding: 0; margin: 0; color: black; background-color: white; border-bottom:1px solid gray; padding-left: 5px; padding-top: 5px; font-weight: bolder;}
+div#login tr{height: 35px}
+
+div#menuList{ font-size: 16px; font-weight: bolder; padding-left: 5px; text-align: center; /*height: 400px;*/}
+div#menuList ul.list1{vertical-align: middle; display: block; padding-top: 9px; width: 175px;height: 35px;background-image: url(/bpps/ui/skin_1/images/menubg2.jpg); background-repeat: no-repeat; background-position: center;}
+div#menuList span a{font-size: 14px;font-weight:normal;}
+div#menuList a{ color: #069; cursor: auto; display: inline; font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-weight: bold; text-decoration: none;}
+div#menuList a:hover { text-decoration: underline; color:#ff580a; text-decoration:none;}
+
+div#cooperation{ font-size: 16px; font-weight: bolder; text-align: center; }
+div#cooperation ul.title{vertical-align: middle; display: block; padding-top: 9px; width: 175px;height: 35px;background-image: url(/bpps/ui/skin_1/images/menubg2.jpg); background-repeat: no-repeat; background-position: center;}
+
+
+div#mainCenter { width: 761px; height: auto; text-align: center; padding: 0; margin: 0; margin-left: 5px; color: black; background-color: white; border:1px solid gray;}
+div#mainCenter p{text-align: left;}
+div#mainCenter p.title{font-size: 16px;font-weight: bolder;margin-top: 10px;text-indent: 0em;}
+div#mainCenter p.detail{text-align: left;}
+div#mainCenter table{width:100%}
+/*div#mainCenter td{width:33%;}*/
+div#mainCenter td span.imgName{line-height: 50px}
+
+div#diseaseCenter { width: 761px; height: auto; text-align: center; padding: 0; margin: 0; margin-left: 5px; color: black; background-color: white; border:1px solid gray;}
+div#diseaseCenter td{height:30px;text-align: left;}
+div#diseaseCenter td span{margin-left: 5px;}
+div#diseaseCenter p.title{font-size: 16px;font-weight: bolder;margin-top: 10px;text-indent: 0em;}
+div#formContent { margin-left: auto; margin-right: auto;}
+div#search { text-align: center; padding: 0; margin: 0; margin-top: 10px; margin-bottom: 30px; color: black; background-color: white;}
+div#footer { text-align: center; padding: 0; margin: 0; margin-top: 30px; margin-bottom: 30px; color: black; background-color: white;}
+div.title{ font-weight:bold; font-size: 16px; margin-top: 10px;}
+div { display: block;}
+p{ text-indent: 2em;}
+input{ background-color: white; background-image: none; border: #069 solid 1px; color: black; cursor: auto; display: inline-block; font-family: Arial, sans-serif, Verdana, Tahoma, Helvetica;
+ font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; height: 18px; letter-spacing: normal; line-height: normal; margin: 0px; padding-bottom: 1px;
+ padding-left: 3px; padding-right: 3px; padding-top: 1px; text-indent: 0px; text-shadow: none; text-transform: none; vertical-align: middle; width: 152px; word-spacing: 0px;
+ z-index: auto;}
+.submit{ background-color: #069; background-image: none; border: #D2F3FD solid 1px; color: white; cursor: pointer; display: inline-block; font-family: Arial;
+ font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; height: 23px; letter-spacing: normal; line-height: normal; margin: 0px; padding-bottom: 2px;
+ padding-left: 5px; padding-right: 5px; padding-top: 2px; position: static; text-align: center; text-indent: 0px; text-shadow: none; text-transform: none; vertical-align: middle;
+ white-space: pre; width: 36px; word-spacing: 0px; z-index: auto;}
+
+div#article_header{margin-top: 10px;margin-bottom: 20px;text-align: center;font-size: 16px;color: #069;font-weight: bold;}
+div#article_content{width: 740px;font-size: 12px;line-height: 1.8em;padding-left: 5px;
+    display: block;text-align: left;font-family: Helvetica, Tahoma, Arial, sans-serif;color: black;}
+div#article_content tr td{font-size: 14px;text-overflow:ellipsis;white-space:nowrap;}
+
+.theform{padding:0; table-layout:auto;}
+.theform tr td{padding:4px 0 4px 0;border:none;padding-right:20px;color:blue;font-family:Tahoma, Geneva, sans-serif;}
+.theform tr th{padding:4px 0 4px 0;color:#000; font-weight:normal; font-family:Arial,Helvetica,sans-serif; text-align:right;}
+
+textarea{ background-color: white; background-image: none; border: #069 solid 1px; color: black; cursor: auto; display: inline-block; font-family: Arial, sans-serif, Verdana, Tahoma, Helvetica;
+ font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; height: 18px; letter-spacing: normal; line-height: normal; margin: 0px; padding-bottom: 1px;
+ padding-left: 3px; padding-right: 3px; padding-top: 1px; text-indent: 0px; text-shadow: none; text-transform: none; vertical-align: middle; width: 152px; word-spacing: 0px;
+ z-index: auto;}

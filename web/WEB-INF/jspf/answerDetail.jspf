@@ -1,0 +1,31 @@
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.pojo.ExpertHelpMessage"%>
+<%@page import="com.bpps.dao.ExpertHelpMessageDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div id="mainCenter">
+
+    <%
+        request.setCharacterEncoding("UTF-8");
+        String ehmIdStr = request.getParameter("ehmId");
+        if (ehmIdStr == null && ehmIdStr.equals("")) {
+        } else {
+            Integer ehmId = Integer.parseInt(ehmIdStr);
+            ExpertHelpMessageDAO dao = new ExpertHelpMessageDAO();
+            ExpertHelpMessage expertHelpMessage = dao.getExpertHelpMessageById(ehmId);
+    %>
+    <table id="detail"  class="theform" >
+        <tr><th>提问者网名：</th>
+            <td><%=expertHelpMessage.getEhmUserName()%></td></tr>
+        <tr><th>提问时间：</th>
+            <td><%=expertHelpMessage.getEhmDate()%></td></tr>
+        <tr><th>问题：</th>
+            <td><%=expertHelpMessage.getEhmUserQuestion()%></td></tr>
+        <tr><th>解答：</th>
+            <td><%=expertHelpMessage.getEhmExpertAnswer()%></td></tr>
+    </table>
+
+    <%
+        }
+    %>
+</div>

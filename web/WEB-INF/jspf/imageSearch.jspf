@@ -1,0 +1,24 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="com.bpps.pojo.Position"%>
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.dao.PositionDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+    String labelId = request.getParameter("labelId");
+%>
+
+<div id="mainCenter">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/ui/jQuery-Image-Gallery-master/css/jquery-ui.css" id="theme"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/ui/jQuery-Image-Gallery-master/css/jquery.image-gallery.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/ui/jQuery-Image-Gallery-master/css/style.css"/>
+    <div id="gallery"></div><input type="hidden" id="labelId" name="labelId" value="<%=labelId%>"/>
+    <script src="${pageContext.request.contextPath}/ui/jQuery-Image-Gallery-master/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/ui/jQuery-Image-Gallery-master/js/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/ui/jQuery-Image-Gallery-master/js/load-image.min.js"></script>
+    <script src="${pageContext.request.contextPath}/ui/jQuery-Image-Gallery-master/js/jquery.image-gallery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/ui/jQuery-Image-Gallery-master/js/main.js"></script>
+
+    <div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
+</div>

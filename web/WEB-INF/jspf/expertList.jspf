@@ -1,0 +1,65 @@
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.pojo.Expert"%>
+<%@page import="com.bpps.dao.ExpertDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+    String labelId = request.getParameter("labelId");
+    int labelIdInt = 0;
+    ExpertDAO expertDAO = new ExpertDAO();
+    List<Expert> experts = null;
+    if (labelId == null) {
+        experts = expertDAO.getExperts();
+    } else {
+        labelIdInt = Integer.parseInt(labelId);
+        experts = expertDAO.getExpertsByLabelId(labelIdInt);
+    }
+%>
+
+<div id="mainCenter">
+
+    <table  class="theform" id="detail">
+        <tr>
+            <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">姓名</th>
+            <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">性别</th>
+            <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">职称</th>
+            <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">地址</th></tr>
+
+        <%
+
+            if (experts == null || experts.isEmpty()) {
+                out.print("<tr><td colspan=6 align='center'>系统中暂时没有数据，请插入数据！</td></tr>");
+            } else {
+                for (Expert article1 : experts) {
+                    out.print("<tr><td><a href='");
+                    out.print(request.getContextPath());
+                    out.print("/functionPage/expertDetail.jsp?eptId=");
+                    out.print(article1.getEptId());
+                    out.print("'>");
+                    out.print(article1.getEptName());
+                    out.print("</a></td><td>");
+                    if (article1.getEptSex() == 0) {
+                        out.print("男");
+                    } else {
+                        out.print("女");
+                    }
+                    out.print("</td><td>");
+                    if (article1.getEptZhichen() == null || article1.getEptZhichen().equals("")) {
+                        out.print("无");
+                    } else {
+                        out.print(article1.getEptZhichen());
+                    }
+                    out.print("</td><td>");
+                    if (article1.getEptAddress() == null || article1.getEptAddress().equals("")) {
+                        out.print("无");
+                    } else {
+                        out.print(article1.getEptAddress());
+                    }
+                    out.print("</td></tr>");
+                }
+            }
+        %>
+
+    </table>
+</div>

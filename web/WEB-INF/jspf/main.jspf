@@ -1,0 +1,21 @@
+<%@page import="com.bpps.pojo.Article"%>
+<%@page import="com.bpps.dao.ArticleDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+
+    ArticleDAO articleDAO = new ArticleDAO();
+    Article article = articleDAO.getSystemIntroduce();
+
+%>
+
+<div id="mainCenter">
+<%
+    if(article!=null){
+        out.print(article.getArticleContent());
+    }else{
+        out.print("请录入系统介绍内容！");
+    }
+%>
+</div>

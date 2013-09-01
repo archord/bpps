@@ -1,0 +1,165 @@
+<%-- 
+    Document   : diseaseAdd
+    Created on : 2012-5-19, 15:19:52
+    Author     : Administrator
+--%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+request.setCharacterEncoding("UTF-8");
+String labelId = request.getParameter("labelId");
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>病害种类添加页面</title>
+        <!--link href="${pageContext.request.contextPath}/ui/layout.css" rel="stylesheet" type="text/css"/-->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/themes/default/default.css" />
+        <link href="${pageContext.request.contextPath}/ui/skin_1/css/common.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript"  charset="utf-8" src="${pageContext.request.contextPath}/ui/skin_1/js/eceye_01.js"></script>
+        <script type="text/javascript"  charset="utf-8" src="${pageContext.request.contextPath}/js/kindeditor.js"></script>
+	<script type="text/javascript"  charset="utf-8" src="${pageContext.request.contextPath}/js/lang/zh_CN.js"></script>
+	<script type="text/javascript"  charset="utf-8" src="${pageContext.request.contextPath}/js/plugins/code/prettify.js"></script>
+
+    </head>
+    <body>
+     <table cellpadding="0" cellspacing="0" id="main-mypos">
+      <tr>
+        <td width="3" height="21" align="left"><img src="${pageContext.request.contextPath}/ui/skin_1/images/nav-left.gif" width="4" height="27"></td>
+        <th align="left">您的位置：病害管理 > 增加病害信息</th>
+        <td width="3" align="right"><img src="${pageContext.request.contextPath}/ui/skin_1/images/rht-left.gif" ></td>
+      </tr>
+    </table>
+
+ <table border="0" cellspacing="0" cellpadding="0" class="pannel-1" >
+  <!-- Pannel title -->
+  <thead>
+    <tr>
+      <td class="pannel-head-left">&nbsp;</td>
+      <th class="pannel-head-mid">增加病害信息</th>
+      <td class="pannel-head-right"></td>
+    </tr>
+  </thead>
+  <!-- /Pannel title -->
+  <!-- Pannel contents -->
+  <tbody>
+
+    <tr>
+      <td  colspan="3" valign="top" ><!-- form(input) 默认不显示，去掉display 样式后显示-->
+        <fieldset>
+        <legend>增加病害</legend>
+            <form name="diseaseAdd" method="post" action="${pageContext.request.contextPath}/diseaseAction.do?method=addAction" enctype="multipart/form-data">
+                <table  class="theform" >
+                    <tr><th>病害名称：</th>
+                    <td><input type="text" name="disName" value="" /><input type="hidden" name="labelId" value="<%=labelId%>"/></td></tr>
+                <tr><th>病害英文名称：</th>
+                    <td><input type="text" name="disNameEn" value="" /></td></tr>
+                <tr><th>病害图片：</th>
+                    <td><input type="file" name="disImage" value="" /></td></tr>
+                <tr><th>病害简介：</th>
+                    <td><textarea name="disIntroduction" rows="4" cols="60"></textarea></td></tr>
+                <tr><th>病害详细内容：</th<td></td></tr>
+                <tr><td colspan="2"><textarea name="disContent" cols="100" rows="6" style="width:700px;height:150px;visibility:hidden;"></textarea>
+                </td></tr>
+                <tr><th>病害防治内容：</th<td></td></tr>
+                <tr><td colspan="2"><textarea name="disPreventionContent" cols="100" rows="6" style="width:700px;height:150px;visibility:hidden;"></textarea>
+                </td></tr>
+                <tr><th>病害高光谱特征：</th<td></td></tr>
+                <tr><td colspan="2"><textarea name="disSpectrum" cols="100" rows="6" style="width:700px;height:150px;visibility:hidden;"></textarea>
+                </td></tr>
+                <tr><td colspan="2"><input type="submit" id="addDiseaseButton" class="bt" name="button" value="提交内容" onclick="return checkInputValue();"/> (提交快捷键: Ctrl + Enter)</td></tr>
+                </table>
+            </form>
+        </fieldset>
+
+
+       </td>
+    </tr>
+
+
+  </tbody>
+  <!-- /Pannel contents -->
+</table>
+
+        <script type="text/javascript" >
+		KindEditor.ready(function(K) {
+			var editor1 = K.create('textarea[name="disContent"]', {
+				uploadJson : '${pageContext.request.contextPath}/jsp/upload_json.jsp',
+				fileManagerJson : '${pageContext.request.contextPath}/jsp/file_manager_json.jsp',
+				allowFileManager : true,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						document.forms['diseaseAdd'].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						document.forms['diseaseAdd'].submit();
+					});
+				}
+			});
+			var editor2 = K.create('textarea[name="disPreventionContent"]', {
+				uploadJson : '${pageContext.request.contextPath}/jsp/upload_json.jsp',
+				fileManagerJson : '${pageContext.request.contextPath}/jsp/file_manager_json.jsp',
+				allowFileManager : true,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						document.forms['diseaseAdd'].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						document.forms['diseaseAdd'].submit();
+					});
+				}
+			});
+			var editor3 = K.create('textarea[name="disSpectrum"]', {
+				uploadJson : '${pageContext.request.contextPath}/jsp/upload_json.jsp',
+				fileManagerJson : '${pageContext.request.contextPath}/jsp/file_manager_json.jsp',
+				allowFileManager : true,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						document.forms['diseaseAdd'].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						document.forms['diseaseAdd'].submit();
+					});
+				}
+			});
+			prettyPrint();
+		});
+
+                    /**
+                     * check some input box is null
+                     */
+                    function checkInputValue() {
+                        var disName = document.getElementsByName("disName")[0].value;
+                        if(disName==null || disName==""){
+                            alert("病害名称不能为空");
+                            return false;
+                        }
+                        //document.getElementsByName("diseaseAdd")[0].submit();
+                        //document.getElementById("addDiseaseButton").click();
+                        return true;
+                    }
+	</script>
+    </body>
+</html>
+<%!
+private String htmlspecialchars(String str) {
+	str = str.replaceAll("&", "&amp;");
+	str = str.replaceAll("<", "&lt;");
+	str = str.replaceAll(">", "&gt;");
+	str = str.replaceAll("\"", "&quot;");
+	return str;
+}
+%>

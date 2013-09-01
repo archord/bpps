@@ -1,0 +1,67 @@
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.pojo.ExpertHelpMessage"%>
+<%@page import="com.bpps.dao.ExpertHelpMessageDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div id="mainCenter">
+    <div style="border-bottom: 1px solid gray;">
+    <form name="addForm" method="post" action="${pageContext.request.contextPath}/expertHelpMessageAction.do?method=addAction">
+        <table id="detail" class="theform">
+            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">提问：</th><td><textarea name="ehmUserQuestion" cols="80" rows="2" style="width:500px;height:80px;"></textarea></td></tr>
+            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">姓名：</th><td><input type="text" name="ehmUserName" value="" />
+                </td></tr>
+            <tr><th></th><td><input onclick="return checkInputValue();" type="submit" class="submit" name="button" value="提交问题" style="width:80px;height: 23px;"/>
+                </td></tr>
+            <tr><td colspan="2">
+                </td></tr>
+        </table>
+    </form>
+        </div>
+    <table class="theform">
+        <tr>
+            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:100px;">提问者</th>
+            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:230px;">用户提问</th>
+            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;">专家解答</th>
+            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:100px;">日期</th>
+            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;">详细</th></tr>
+
+        <%
+            request.setCharacterEncoding("UTF-8");
+            ExpertHelpMessageDAO expertHelpMessageDAO = new ExpertHelpMessageDAO();
+            List<ExpertHelpMessage> messages = expertHelpMessageDAO.getEnabledExpertHelpMessages();
+
+            if (messages == null || messages.isEmpty()) {
+                out.print("<tr><td colspan=4 align='center'>系统中暂时没有数据，请插入数据！</td></tr>");
+            } else {
+                for (ExpertHelpMessage message : messages) {
+                    int srtLen = 13;
+                    String userQuestion = message.getEhmUserQuestion();
+                    String expertAnswer = message.getEhmExpertAnswer();
+                    if(userQuestion==null)
+                        userQuestion = "无";
+                    if(expertAnswer==null)
+                        expertAnswer = "无";
+                    if(userQuestion.length()>srtLen)
+                        userQuestion = userQuestion.substring(0, srtLen) + "...";
+                    if(expertAnswer.length()>srtLen)
+                        expertAnswer = expertAnswer.substring(0, srtLen) + "...";
+                    out.print("<tr><td style=\"text-align: left;color: black;\">");
+                    out.print(message.getEhmUserName());
+                    out.print("</td><td style=\"text-align: left;color: black;\">");
+                    out.print(userQuestion);
+                    out.print("</td><td style=\"text-align: left;color: black;\">");
+                    out.print(expertAnswer);
+                    out.print("</td><td style=\"text-align: left;color: black;\">");
+                    out.print(message.getEhmDate());
+                    out.print("</td><td style=\"text-align: left;color: black;\"><a href='");
+                    out.print(request.getContextPath());
+                    out.print("/functionPage/answerDetail.jsp?ehmId=");
+                    out.print(message.getEhmId());
+                    out.print("'>详细");
+                    out.print("</a></td></tr>");
+                }
+            }
+        %>
+
+    </table>
+</div>

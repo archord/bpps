@@ -1,0 +1,67 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="com.bpps.pojo.Position"%>
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.dao.PositionDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+request.setCharacterEncoding("UTF-8");
+String labelId = request.getParameter("labelId");
+%>
+
+<div id="mainCenter">
+    <form id="symSearch" name="symSearch" method="post" action="${pageContext.request.contextPath}/diseaseAction.do?method=mutilSearchAction">
+        <%
+
+            int labelIdInt = Integer.parseInt(labelId);
+            PositionDAO positionDAO = new PositionDAO();
+            List<Position> positions = positionDAO.getPositions(labelIdInt);
+
+            out.println("<table>");
+            int colNum = 3;
+            int rowNum = (positions.size() % colNum == 0) ? (positions.size() / colNum) : (positions.size() / colNum + 1);
+            if (colNum > positions.size()) {
+                colNum = positions.size();
+            }
+            out.println("<tr><td colspan=" + colNum + " style=\"font-size: 16px;font-weight: bolder;margin-top: 10px;text-indent: 0em;\">请选择危害部位</td></tr>");
+            for (int row = 0; row < rowNum; row++) {
+                String trImg = "<tr>";
+                String trName = "<tr>";
+                String trChechbox = "<tr>";
+                for (int col = 0; col < colNum; col++) {
+                    int index = row * colNum + col;
+                    if (index < positions.size()) {
+
+                        trImg += "<td>";
+                        trImg += "<span class=img> ";
+                        trImg += "<img src=\"" + positions.get(index).getPosImagePath() + "\" alt=\"" + positions.get(index).getPosName() + "\"/></span> ";
+                        trImg += "</td>";
+
+                        trName += "<td>";
+                        trName += "<input style=\"border:0px;width:20px;\" class=checkbox type=\"checkbox\" name=\"posIds\" value=\"" + positions.get(index).getPosId() + "\"/><span class=imgName>";
+                        trName += positions.get(index).getPosName();
+                        trName += "</span>";
+                        trName += "</td>";
+                    } else {
+                        trImg += "<td>";
+                        trImg += "</td>";
+                        trName += "<td>";
+                        trName += "</td>";
+                    }
+                }
+                trImg += "</tr>";
+                trName += "</tr>";
+                out.println(trImg);
+                out.println(trName);
+            }
+            out.println("<tr><td colspan=\"" + colNum + "\" align=\"center\">");
+            out.println("<input type=\"hidden\" value=\"1\" name=\"startSymSearch\"/>");
+            out.println("<input type=\"hidden\" value=\""+ labelId +"\" name=\"labelId\"/>");
+            out.println("<input onclick=\"return checkedNum();\" type=\"submit\" value=\"检索\" class=\"submit\"  style=\"width:70px;height: 25px;\"/>");
+            out.println("</td></tr>");
+            out.println("</table>");
+        %>
+    </form>
+    <div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
+
+</div>
