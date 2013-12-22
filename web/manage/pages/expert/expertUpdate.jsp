@@ -98,10 +98,14 @@ Expert expert = (Expert)request.getAttribute("detail");
                             </select></td></tr>
                     <tr><th>职称：</th>
                         <td><input type="text" name="eptZhichen" value="<%=expert.getEptZhichen()%>" /></td>
-                        <th>电话：</th>
-                        <td><input type="text" name="eptPhone" value="<%=expert.getEptPhone()%>" /></td></tr>
-                    <tr><th>地址：</th>
-                        <td><input type="text" name="eptAddress" value="<%=expert.getEptAddress()%>" /></td>
+                        <th>专业特长：</th>
+                        <td><input type="text" name="eptFeature" value="<%=expert.getEptFeature()%>" /></td></tr>
+                    <tr><th>所在单位：</th>
+                        <td><input type="text" name="eptOrganization" value="<%=expert.getEptOrganization()%>" /></td>
+                        <th>联系地址：</th>
+                        <td><input type="text" name="eptAddress" value="<%=expert.getEptAddress()%>" /></td></tr>
+                    <tr><th>电话：</th>
+                        <td><input type="text" name="eptPhone" value="<%=expert.getEptPhone()%>" /></td>
                         <th>邮编：</th>
                         <td><input type="text" name="eptPostcode" value="<%=expert.getEptPostcode()%>" /></td></tr>
                     <tr><th>邮箱：</th>

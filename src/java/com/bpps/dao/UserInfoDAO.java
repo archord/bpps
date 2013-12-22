@@ -45,6 +45,28 @@ public class UserInfoDAO {
         }
 
     }
+    
+    public UserInfo getUserById(String userId){
+        log.debug("get User by id");
+
+        try {
+            UserInfo userInfo = new UserInfo();
+            String sql = "select * from user_info where ui_id = " + userId;
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                userInfo.setUserId(rs.getInt("ui_id"));
+                userInfo.setUserName(rs.getString("ui_name"));
+                userInfo.setPassword(rs.getString("ui_password"));
+            }
+            dbm.close();
+            return userInfo;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
 
     public void addUser(UserInfo obj){
         log.debug("add Symptom");

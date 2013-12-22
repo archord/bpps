@@ -23,7 +23,7 @@
         <tr>
             <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">姓名</th>
             <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">性别</th>
-            <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">职称</th>
+            <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">专业特长</th>
             <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">地址</th></tr>
 
         <%
@@ -45,10 +45,10 @@
                         out.print("女");
                     }
                     out.print("</td><td>");
-                    if (article1.getEptZhichen() == null || article1.getEptZhichen().equals("")) {
+                    if (article1.getEptFeature() == null || article1.getEptFeature().equals("")) {
                         out.print("无");
                     } else {
-                        out.print(article1.getEptZhichen());
+                        out.print(article1.getEptFeature());
                     }
                     out.print("</td><td>");
                     if (article1.getEptAddress() == null || article1.getEptAddress().equals("")) {

@@ -64,7 +64,7 @@
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;background-color: #D1D7DC;">提问者</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:250px;background-color: #D1D7DC;">用户提问</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">专家解答</th>
-                                    <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;background-color: #D1D7DC;">审核通过</th>
+                                    <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;background-color: #D1D7DC;">审核状态</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;background-color: #D1D7DC;">回答</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;background-color: #D1D7DC;">删除</th></tr>
 
@@ -105,14 +105,21 @@
                                             } else if (isEnable == 2) {
                                                 out.print("不通过");
                                             }else {
-                                                out.print("待审");
+                                                out.print("未审核");
                                             }
                                             out.print("</td><td><a href='");
                                             out.print(request.getContextPath());
                                             out.print("/expertHelpMessageAction.do?method=updateAction&ehmId=");
                                             out.print(message.getEhmId());
-                                            out.print("'>回答");
-                                            out.print("</td><td><a href='");
+                                            out.print("'>");
+                                            if (isEnable == 1) {
+                                                out.print("修改");
+                                            } else if (isEnable == 2) {
+                                                out.print("修改");
+                                            }else {
+                                                out.print("审核");
+                                            }
+                                            out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
                                             out.print(request.getContextPath());
                                             out.print("/expertHelpMessageAction.do?method=deleteAction&ehmId=");
                                             out.print(message.getEhmId());

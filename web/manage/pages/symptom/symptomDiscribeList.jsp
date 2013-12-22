@@ -168,7 +168,7 @@ String labelId = request.getParameter("labelId");
             out.print(symptomDiscribe.getSymDiscId());
             out.print("'>修改</a>");
             */
-            out.print("</td><td><a href='");
+            out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
             out.print(request.getContextPath());
             out.print("/symptomDiscribeAction.do?method=deleteAction&symDiscId=");
             out.print(symptomDiscribe.getSymDiscId());

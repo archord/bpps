@@ -99,7 +99,7 @@ request.setCharacterEncoding("UTF-8");
             out.print("/functionPageAction.do?method=updateAction&pageId=");
             out.print(page1.getPageId());
             out.print("'>修改</a>");
-            out.print("</td><td><a href='");
+            out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
             out.print(request.getContextPath());
             out.print("/functionPageAction.do?method=deleteAction&pageId=");
             out.print(page1.getPageId());

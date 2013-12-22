@@ -11,6 +11,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -29,6 +30,7 @@ public class LabelAction extends DispatchAction {
     private final static String LIST = "list";
     private final static String DETAIL = "detail";
     private final static String UPDATE = "update";
+    private final static String ADJUSTMENUORDER = "adjustMenuOrder";
 
     /**
      * This is the Struts action method called on
@@ -38,10 +40,10 @@ public class LabelAction extends DispatchAction {
     public ActionForward addAction(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        LabelSystem obj = (LabelSystem)form;
-        LabelDAO dao= new LabelDAO();
+        LabelSystem obj = (LabelSystem) form;
+        LabelDAO dao = new LabelDAO();
         dao.addLabelSystem(obj);
-        
+
         return mapping.findForward(LIST);
     }
 
@@ -95,7 +97,7 @@ public class LabelAction extends DispatchAction {
 
         return mapping.findForward(forward);
     }
-    
+
     public ActionForward updateLabelAction(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -111,14 +113,13 @@ public class LabelAction extends DispatchAction {
         return mapping.findForward(forward);
     }
 
-
     public ActionForward doUpdateAction(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         LabelSystem obj = (LabelSystem) form;
         LabelDAO dao = new LabelDAO();
         dao.updateLabelSystem(obj);
-        
+
         return mapping.findForward(LIST);
     }
 
@@ -131,6 +132,21 @@ public class LabelAction extends DispatchAction {
             Integer labelId = Integer.parseInt(strId);
             LabelDAO dao = new LabelDAO();
             dao.deleteLabelSystem(labelId);
+        }
+
+        return mapping.findForward(forward);
+    }
+
+    public ActionForward adjustMenuOrder(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        String forward = ADJUSTMENUORDER;
+        LabelDAO labelDAO = new LabelDAO();
+        List<LabelSystem> level1 = labelDAO.getMenuLabels();
+        for (LabelSystem label : level1) {
+            String labelOrder = request.getParameter("label"+label.getLabelId());
+            //System.out.println(labelOrder);
+            labelDAO.updateLabelOrder(label.getLabelId(), Integer.parseInt(labelOrder));
         }
 
         return mapping.findForward(forward);

@@ -69,7 +69,7 @@ String htmlData = request.getParameter("disContent") != null ? request.getParame
         <legend>增加专家</legend>
             <form name="expertAdd" method="post" action="${pageContext.request.contextPath}/expertAction.do?method=addAction" enctype="multipart/form-data">
                 <table  class="theform" >
-                    <tr><th>所属标签（专家类别）：</th>
+                    <tr><th>专家类别：</th>
                         <td>
                         <select id="labelId" name="labelId">
 
@@ -98,10 +98,14 @@ String htmlData = request.getParameter("disContent") != null ? request.getParame
                         <td><select id="eptSex" name="eptSex"><option value="0">男</option><option value="1">女</option></select></td></tr>
                     <tr><th>职称：</th>
                         <td><input type="text" name="eptZhichen" value="" /></td>
-                        <th>电话：</th>
-                        <td><input type="text" name="eptPhone" value="" /></td></tr>
-                    <tr><th>地址：</th>
-                        <td><input type="text" name="eptAddress" value="" /></td>
+                        <th>专业特长：</th>
+                        <td><input type="text" name="eptFeature" value="" /></td></tr>
+                    <tr><th>所在单位：</th>
+                        <td><input type="text" name="eptOrganization" value="" /></td>
+                        <th>联系地址：</th>
+                        <td><input type="text" name="eptAddress" value="" /></td></tr>
+                    <tr><th>电话：</th>
+                        <td><input type="text" name="eptPhone" value="" /></td>
                         <th>邮编：</th>
                         <td><input type="text" name="eptPostcode" value="" /></td></tr>
                     <tr><th>邮箱：</th>

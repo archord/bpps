@@ -1,44 +1,57 @@
-<%@page contentType="text/html"%>
-<%@page pageEncoding="UTF-8"%>
+<%--
+    Document   : diseaseAdd
+    Created on : 2012-5-19, 15:19:52
+    Author     : Administrator
+--%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
+<%@page import="com.bpps.pojo.Article"%>
+<%@page import="com.bpps.dao.ArticleDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.bpps.pojo.Disease" %>
+<%@page import="java.util.List" %>
+<%@page import="com.bpps.dao.DiseaseDAO" %>
+<%
+    request.setCharacterEncoding("UTF-8");
+    String articleId = request.getParameter("articleId");
+    int articleIdInt = Integer.parseInt(articleId);
+
+    ArticleDAO articleDAO = new ArticleDAO();
+    Article article = articleDAO.getArticleById(articleIdInt);
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
     <head>
-        <title>黄瓜主要病害标准化远程智能诊断系统——实用技术</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>农作物病虫害诊断与防治决策系统——实用技术</title>
         <link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/ui/skin_1/icon/icon.ico"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta http-equiv="Content-Style-Type" content="text/css" />  <!-- w3c recomends this meta tag  -->
-        <meta http-equiv="Content-Script-Type" content="text/javascript" />  <!-- w3c recomends this meta tag  -->
-        <meta name="keywords" content="" />
-        <meta name="description" content="" />
-        <meta name="copyright" content="" />
-        <meta name="author" content="" />
-        <meta name="rating" content="general" />
-        <meta name="robots" content="all" />
-        
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/ui/dropdown/dropdown.css" type="text/css" media="screen, projection" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/ui/layout.css" type="text/css"/>	
-        <script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
-        <script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/js/nav2.1.js"></script>
-        <script language="javascript" type="text/javascript">
-            $(document).ready(function(){
-                $("#JqueryMenu").navPlugin({
-                    'itemWidth': 120,
-                    'itemHeight': 30
-                });
-            });
-        </script>
+        <!--link href="${pageContext.request.contextPath}/ui/layout.css" rel="stylesheet" type="text/css"/-->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/themes/default/default.css" />
+        <link href="${pageContext.request.contextPath}/ui/skin_1/css/common.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript"  charset="utf-8" src="${pageContext.request.contextPath}/ui/skin_1/js/eceye_01.js"></script>
+        <script type="text/javascript"  charset="utf-8" src="${pageContext.request.contextPath}/js/kindeditor.js"></script>
+	<script type="text/javascript"  charset="utf-8" src="${pageContext.request.contextPath}/js/lang/zh_CN.js"></script>
+	<script type="text/javascript"  charset="utf-8" src="${pageContext.request.contextPath}/js/plugins/code/prettify.js"></script>
+
     </head>
     <body>
+     <table cellpadding="0" cellspacing="0" id="main-mypos">
+      <tr>
+        <td width="3" height="21" align="left"><img src="${pageContext.request.contextPath}/ui/skin_1/images/nav-left.gif" width="4" height="27"></td>
+        <th align="left">您的位置：实用技术详细信息</th>
+        <td width="3" align="right"><img src="${pageContext.request.contextPath}/ui/skin_1/images/rht-left.gif" ></td>
+      </tr>
+    </table>
         <div id="page">
-            <%@include file="/WEB-INF/jspf/head.jspf"%>
-            <table id="mainTable" >
-                <tr>
-                    <td><%@include file="/WEB-INF/jspf/left.jspf"%></td>
-                    <td><%@include file="/WEB-INF/jspf/technology.jspf"%></td>
-                </tr>
-            </table>
+            <div id="article_header">
+            <%=article.getLabelName()%>——<%=article.getArticleName()%>
+            </div>
+            <div id="article_content">
+            <%=article.getArticleContent()%>
+            </div>
         </div>
-        <%@include file="/WEB-INF/jspf/foot.jspf"%>
+
     </body>
 </html>

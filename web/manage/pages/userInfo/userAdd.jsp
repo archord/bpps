@@ -22,7 +22,7 @@ String htmlData = request.getParameter("disContent") != null ? request.getParame
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>病害症状添加页面</title>
+        <title>用户信息添加页面</title>
         <!--link href="${pageContext.request.contextPath}/ui/layout.css" rel="stylesheet" type="text/css"/-->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/themes/default/default.css" />
         <link href="${pageContext.request.contextPath}/ui/skin_1/css/common.css" rel="stylesheet" type="text/css">
@@ -36,7 +36,7 @@ String htmlData = request.getParameter("disContent") != null ? request.getParame
      <table cellpadding="0" cellspacing="0" id="main-mypos">
       <tr>
         <td width="3" height="21" align="left"><img src="${pageContext.request.contextPath}/ui/skin_1/images/nav-left.gif" width="4" height="27"></td>
-        <th align="left">您的位置：症状管理 > 增加症状信息</th>
+        <th align="left">您的位置：用户管理 > 增加用户信息</th>
         <td width="3" align="right"><img src="${pageContext.request.contextPath}/ui/skin_1/images/rht-left.gif" ></td>
       </tr>
     </table>
@@ -54,7 +54,7 @@ String htmlData = request.getParameter("disContent") != null ? request.getParame
   <thead>
     <tr>
       <td class="pannel-head-left">&nbsp;</td>
-      <th class="pannel-head-mid">增加症状信息</th>
+      <th class="pannel-head-mid">增加用户信息</th>
       <td class="pannel-head-right"></td>
     </tr>
   </thead>
@@ -66,7 +66,7 @@ String htmlData = request.getParameter("disContent") != null ? request.getParame
     <tr>
       <td  colspan="3" valign="top" ><!-- form(input) 默认不显示，去掉display 样式后显示-->
         <fieldset>
-        <legend>增加症状</legend>
+        <legend>增加用户</legend>
             <form name="userAdd" method="post" action="${pageContext.request.contextPath}/userInfoAction.do?method=addAction">
                 <table  class="theform" >
                 <tr><th>用户名：</th>

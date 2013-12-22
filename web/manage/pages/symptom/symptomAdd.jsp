@@ -4,9 +4,9 @@
     Author     : Administrator
 --%>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.bpps.pojo.Symptom"%>
 <%@page import="com.bpps.dao.SymptomDAO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.bpps.pojo.Position" %>
 <%@page import="java.util.List" %>
 <%@page import="com.bpps.dao.PositionDAO" %>

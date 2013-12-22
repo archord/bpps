@@ -49,7 +49,10 @@ body {
                 <th><a href="${pageContext.request.contextPath}/manage/pages/label/labelAdd.jsp" target="mainFrame">增加标签</a></th>
               </tr>
               <tr>
-                <th><a href="${pageContext.request.contextPath}/manage/pages/label/updateLabelInfo.jsp" target="mainFrame">更新标签信息</a></th>
+                  <th><a href="${pageContext.request.contextPath}/manage/pages/label/adjustMenuOrder.jsp" target="mainFrame">导航标签排序</a></th>
+              </tr>
+              <tr>
+                <th><a href="${pageContext.request.contextPath}/manage/pages/label/updateLabelInfo.jsp" onclick="return confirm('是否更新导航菜单?');" target="mainFrame">更新标签信息</a></th>
               </tr>
 
           </table></td>
@@ -161,6 +164,13 @@ body {
     e.hidNode('item-04');
     e.hidNode('item-05');
     e.hidNode('item-06');
+</script>
+              
+<script type="text/javascript" >
+
+    function urlClickConfirm(obj) {
+        return confirm("是否更新导航菜单");
+    }
 </script>
 </body>
 </html>

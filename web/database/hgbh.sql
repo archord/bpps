@@ -13,7 +13,7 @@ CREATE SEQUENCE disease_sequence
   START WITH 1
   NOMAXVALUE
   NOCYCLE
-  CACHE 10;
+  CACHE 10
      
 CREATE TRIGGER disease_trigger BEFORE
 insert ON disease FOR EACH ROW
@@ -176,7 +176,12 @@ CREATE TABLE label_system(
   name VARCHAR2(50) DEFAULT NULL,
   isactive NUMBER(1) DEFAULT 0,
   iscrop NUMBER(1) DEFAULT 0,
-  url VARCHAR2(50) DEFAULT NULL
+  url VARCHAR2(50) DEFAULT NULL, 
+  level1 NUMBER(10) default 0,
+  level2 NUMBER(10) default 0,
+  level3 NUMBER(10) default 0,
+  child_num NUMBER(2) default 0,
+  menu_order NUMBER(2) default 0
 );
 
 CREATE SEQUENCE label_system_sequence
@@ -216,7 +221,7 @@ SELECT function_page_sequence.nextval into:New.page_id from dual;
 END;
 
 
-/*10文章*/
+/*12文章*/
 CREATE TABLE article(
   article_id  NUMBER(10) PRIMARY KEY,
   article_name VARCHAR2(50) DEFAULT NULL,
@@ -236,7 +241,7 @@ BEGIN
 SELECT article_sequence.nextval into:New.article_id from dual;
 END;
 
-/*11创建症状图片表*/
+/*13创建症状图片表*/
 CREATE TABLE symptom_image (
   si_id number(10)  primary KEY,
   label_id number(10) DEFAULT NULL,
@@ -259,7 +264,7 @@ select symptom_image_sequence.nextval into:New.si_id from dual;
 end;
 
 
-/*12专家*/
+/*14专家*/
 CREATE TABLE expert (
   ept_id number(10)  primary KEY,
   label_id number(10) DEFAULT NULL,
@@ -269,6 +274,8 @@ CREATE TABLE expert (
   ept_phone VARCHAR2(100) DEFAULT NULL,
   ept_postcode VARCHAR2(100) DEFAULT NULL,
   ept_email VARCHAR2(100) DEFAULT NULL,
+  ept_feature VARCHAR2(100) DEFAULT NULL,
+  ept_organization VARCHAR2(100) DEFAULT NULL,
   ept_address VARCHAR2(100) DEFAULT NULL,
   ept_web VARCHAR2(100) DEFAULT NULL,
   ept_photo_url VARCHAR2(100) DEFAULT NULL,
@@ -288,7 +295,7 @@ begin
 select expert_sequence.nextval into:New.ept_id from dual;
 end;
 
-/*12专家协助
+/*15专家协助
 *ept_enable代表用户的问题需要审核后才能，展示出来，0为待审，1表示审核通过，2为审核不通过
 */
 CREATE TABLE expert_help_message (

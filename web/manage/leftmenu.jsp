@@ -150,7 +150,12 @@ body {
 <%
         }
 %>
-
+              <tr>
+                  <th><a href="${pageContext.request.contextPath}/manage/pages/symptom/multiAttrAssociate.jsp?labelId=<%=labelId%>" target="mainFrame">多属性信息关联</a></th>
+              </tr>
+              <!--tr>
+                  <th><a href="${pageContext.request.contextPath}/manage/pages/symptom/assoInfoSearch.jsp?labelId=<%=labelId%>" target="mainFrame">关联信息查询</a></th>
+              </tr-->
           </table></td>
         </tr>
       </table>

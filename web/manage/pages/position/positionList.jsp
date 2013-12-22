@@ -92,7 +92,7 @@
                                                 out.print("&labelId=");
                                                 out.print(labelId);
                                                 out.print("'>修改</a>");
-                                                out.print("</td><td><a href='");
+                                                out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
                                                 out.print(request.getContextPath());
                                                 out.print("/positionAction.do?method=deleteAction&posId=");
                                                 out.print(Position.getPosId());

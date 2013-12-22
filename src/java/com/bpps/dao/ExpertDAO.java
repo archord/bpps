@@ -57,6 +57,8 @@ public class ExpertDAO {
                 obj.setLabelId(rs.getLong("label_id"));
                 obj.setLabelName(rs.getString("label_name"));
                 obj.setEptPhotoUrl(rs.getString("ept_photo_url"));
+                obj.setEptFeature(rs.getString("ept_feature"));
+                obj.setEptOrganization(rs.getString("ept_organization"));
                 objs.add(obj);
             }
             dbm.close();
@@ -97,6 +99,8 @@ public class ExpertDAO {
                 obj.setLabelId(rs.getLong("label_id"));
                 obj.setLabelName(rs.getString("label_name"));
                 obj.setEptPhotoUrl(rs.getString("ept_photo_url"));
+                obj.setEptFeature(rs.getString("ept_feature"));
+                obj.setEptOrganization(rs.getString("ept_organization"));
                 objs.add(obj);
             }
             dbm.close();
@@ -135,6 +139,8 @@ public class ExpertDAO {
                 obj.setLabelId(rs.getLong("label_id"));
                 obj.setLabelName(rs.getString("label_name"));
                 obj.setEptPhotoUrl(rs.getString("ept_photo_url"));
+                obj.setEptFeature(rs.getString("ept_feature"));
+                obj.setEptOrganization(rs.getString("ept_organization"));
             }
             dbm.close();
             return obj;
@@ -152,7 +158,8 @@ public class ExpertDAO {
             String sql = "insert into expert("
                     + "label_id, ept_name, ept_sex, "
                     + "ept_phone, ept_postcode, ept_email, ept_address, "
-                    + "ept_web, ept_photo_url, ept_zhichen, ept_introduce)values(?,?,?,?,?,?,?,?,?,?,?)";
+                    + "ept_web, ept_photo_url, ept_zhichen, ept_introduce, "
+                    + "ept_feature, ept_organization)values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
             Connection con = ConnectionFactory.getConnection();
             boolean defaultCommit = con.getAutoCommit();
             con.setAutoCommit(false);
@@ -170,6 +177,8 @@ public class ExpertDAO {
             pStatement.setString(9, obj.getEptPhotoUrl());
             pStatement.setString(10, obj.getEptZhichen());
             pStatement.setClob(11, CLOB.empty_lob());
+            pStatement.setString(12, obj.getEptFeature());
+            pStatement.setString(13, obj.getEptOrganization());
             pStatement.execute();
 
             sql = "SELECT ept_introduce FROM expert WHERE ept_id = (SELECT MAX(ept_id) FROM expert) for update";
@@ -206,7 +215,8 @@ public class ExpertDAO {
             String sql = "update expert set "
                     + "label_id = ?, ept_name = ?, ept_sex = ?, "
                     + "ept_phone = ?, ept_postcode = ?, ept_email = ?, ept_address = ?, "
-                    + "ept_web = ?, ept_photo_url = ?, ept_zhichen = ? where ept_id = ?";
+                    + "ept_web = ?, ept_photo_url = ?, ept_zhichen = ?, ept_feature = ?, "
+                    + "ept_organization = ? where ept_id = ?";
              
             //Object[] objs = {obj.getLabelId(), obj.getEptName(), obj.getEptSex(), obj.getEptPhone(), 
                 //obj.getEptPostcode(), obj.getEptEmail(), obj.getEptAddress(), obj.getEptWeb(), 
@@ -227,8 +237,10 @@ public class ExpertDAO {
             pStatement.setString(8, obj.getEptWeb());
             pStatement.setString(9, obj.getEptPhotoUrl());
             pStatement.setString(10, obj.getEptZhichen());
+            pStatement.setString(11, obj.getEptFeature());
+            pStatement.setString(12, obj.getEptOrganization());
             //pStatement.setClob(11, CLOB.empty_lob());
-            pStatement.setLong(11, obj.getEptId());
+            pStatement.setLong(13, obj.getEptId());
             pStatement.execute();
 
             Statement statement = con.createStatement();

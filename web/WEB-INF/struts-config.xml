@@ -79,6 +79,7 @@
             <forward name="detail" path="/manage/pages/label/labelDetail.jsp"/>
             <forward name="update" path="/manage/pages/label/labelUpdate.jsp"/>
             <forward name="success" path="/manage/pages/label/labelList.jsp"/>
+            <forward name="adjustMenuOrder" path="/manage/pages/label/adjustMenuOrder.jsp"/>
         </action>
         <action parameter="method" input="/manage/pages/functionPage/pageAdd.jsp" name="FunctionPageForm" path="/functionPageAction" scope="request" type="com.bpps.struts.FunctionPageAction" validate="false">
             <forward name="list" path="/functionPageAction.do?method=listAction"/>

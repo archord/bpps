@@ -57,6 +57,37 @@ public class ArticleDAO {
             return null;
         }
     }
+    
+    public List<Article> getArticlesByLabelId(int labelId) {
+        log.debug("get All Article");
+
+        try {
+            List<Article> objs = new ArrayList<Article>();
+            String sql = "select ar.*, ls.name label_name "
+                    + "from article ar "
+                    + "LEFT JOIN label_system ls ON ar.label_id = ls.label_id "
+                    + "where ar.label_id = " + labelId + " "
+                    + "order by article_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            CLOB clob = null;
+            while (rs.next()) {
+                Article obj = new Article();
+                obj.setArticleId(rs.getLong("article_id"));
+                obj.setArticleName(rs.getString("article_name"));
+                clob = (oracle.sql.CLOB) rs.getClob("article_content");
+                obj.setArticleContent(MyTools.ClobToString(clob));
+                obj.setLabelId(rs.getLong("label_id"));
+                obj.setLabelName(rs.getString("label_name"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
     public Article getArticleById(int id) {
         log.debug("get Article by ID");

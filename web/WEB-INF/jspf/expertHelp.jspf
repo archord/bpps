@@ -1,3 +1,7 @@
+<%@page import="com.bpps.pojo.Expert"%>
+<%@page import="com.bpps.dao.ExpertDAO"%>
+<%@page import="com.bpps.pojo.LabelSystem"%>
+<%@page import="com.bpps.dao.LabelDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.bpps.pojo.ExpertHelpMessage"%>
 <%@page import="com.bpps.dao.ExpertHelpMessageDAO"%>
@@ -7,16 +11,65 @@
     <div style="border-bottom: 1px solid gray;">
     <form name="addForm" method="post" action="${pageContext.request.contextPath}/expertHelpMessageAction.do?method=addAction">
         <table id="detail" class="theform">
-            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">提问：</th><td><textarea name="ehmUserQuestion" cols="80" rows="2" style="width:500px;height:80px;"></textarea></td></tr>
-            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">姓名：</th><td><input type="text" name="ehmUserName" value="" />
+            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">作物种类：</th>
+                <td style="width: 120px">
+                    
+<select id="labelId" name="labelId">
+
+<%
+        LabelDAO labelDAO = new LabelDAO();
+        List<LabelSystem> level1 = labelDAO.getAllCrops();
+
+        out.print("<option value=\"0\">无</option>");
+        if(level1!=null && !level1.isEmpty())
+        for (LabelSystem label1 : level1) {
+            out.print("<option value=\"");
+            out.print(label1.getLabelId());
+            out.print("\">");
+            out.print(label1.getName());
+            out.print("</option>");
+        }
+%>
+</select>
+                </td>
+                <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">指定专家：</th>
+                <td>
+ <select id="labelId" name="labelId">
+
+<%
+        ExpertDAO expDAO = new ExpertDAO();
+        List<Expert> exps = expDAO.getExperts();
+
+        out.print("<option value=\"0\">无</option>");
+        if(exps!=null && !exps.isEmpty())
+        for (Expert exp : exps) {
+            out.print("<option value=\"");
+            out.print(exp.getEptId());
+            out.print("\">");
+            out.print(exp.getEptName());
+            out.print("</option>");
+        }
+%>
+</select>                   
+                    
+                </td>
+            </tr>
+            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">提问：</th>
+                <td colspan="3"><textarea name="ehmUserQuestion" cols="80" rows="2" style="width:500px;height:80px;"></textarea>
                 </td></tr>
-            <tr><th></th><td><input onclick="return checkInputValue();" type="submit" class="submit" name="button" value="提交问题" style="width:80px;height: 23px;"/>
+            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">姓名：</th>
+                <td colspan="3"><input type="text" name="ehmUserName" value="" />
                 </td></tr>
-            <tr><td colspan="2">
+            <tr><th></th>
+                <td colspan="3"><input onclick="return checkInputValue();" type="submit" class="submit" name="button" value="提交问题" style="width:80px;height: 23px;"/>
+                </td></tr>
+            <tr><td colspan="3">
                 </td></tr>
         </table>
     </form>
         </div>
+
+  <div style="padding: 5px">
     <table class="theform">
         <tr>
             <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:100px;">提问者</th>
@@ -64,4 +117,30 @@
         %>
 
     </table>
+   </div>
 </div>
+                     
+<script type="text/javascript" >
+    /**
+     * check some input box is null ehmUserName
+     */
+    function checkInputValue() {
+        var ehmUserQuestion = document.getElementsByName("ehmUserQuestion")[0].value;
+        var ehmUserName = document.getElementsByName("ehmUserName")[0].value;
+        if(ehmUserQuestion==null || ehmUserQuestion==""){
+            alert("问题不能为空！");
+            return false;
+        }
+        if(ehmUserName==null || ehmUserName==""){
+            alert("姓名不能为空！");
+            return false;
+        }
+        if(ehmUserQuestion.length>500){
+            alert("提问内容不能超过500！");
+            return false;
+        }
+        //document.getElementsByName("diseaseAdd")[0].submit();
+        //document.getElementById("addDiseaseButton").click();
+        return true;
+    }
+</script>

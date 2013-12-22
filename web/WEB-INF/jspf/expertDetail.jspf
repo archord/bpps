@@ -11,47 +11,54 @@
 <div id="mainCenter">
 
 
-    <%
-        request.setCharacterEncoding("UTF-8");
-        String eptId = request.getParameter("eptId");
-        if (eptId != null) {
-            int eptIdInt = Integer.parseInt(eptId);
-            ExpertDAO expertDAO = new ExpertDAO();
-            Expert expert = expertDAO.getExpertById(eptIdInt);
-    %>
-    <table><tr><td>
-                <table id="detail" class="theform">
-                    <!--tr><th>专家类别：</th><td><%=expert.getLabelName()%></td>
-                        <th></th><td></td></tr-->
-                    <tr><th>姓名：</th><td><%=expert.getEptName()%></td>
-                        <th>性别：</th><td>
-                            <%
-                                if (expert.getEptSex() == 1) {
-                                    out.print("女");
-                                } else {
-                                    out.print("男");
-                                }
-                            %>
-                        </td></tr>
-                    <tr><th>职称：</th><td><%=expert.getEptZhichen()%></td>
-                        <th>电话：</th><td><%=expert.getEptPhone()%></td></tr>
-                    <tr><th>地址：</th><td><%=expert.getEptAddress()%></td>
-                        <th>邮编：</th><td><%=expert.getEptPostcode()%></td></tr>
-                    <tr><th>邮箱：</th><td><%=expert.getEptEmail()%></td>
-                        <th>个人网站：</th><td><%=expert.getEptWeb()%></td></tr>
-                </table>
-            </td><td style="width:150px;">
-                <table id="photo" class="theform" >
-                    <tr><td><img src="<%=expert.getEptPhotoUrl()%>"/></td></tr>
-                </table>
+  <%
+    request.setCharacterEncoding("UTF-8");
+    String eptId = request.getParameter("eptId");
+    if (eptId != null) {
+      int eptIdInt = Integer.parseInt(eptId);
+      ExpertDAO expertDAO = new ExpertDAO();
+      Expert expert = expertDAO.getExpertById(eptIdInt);
+  %>
+  <table><tr><td width="605px">
+        <table id="detail" class="theform">
+            <!--tr><th>专家类别：</th><td><%=expert.getLabelName()%></td>
+                <th></th><td></td></tr-->
+          <tr><th>姓名：</th><td><%=expert.getEptName()%></td>
+            <th>性别：</th><td>
+              <%
+                if (expert.getEptSex() == 1) {
+                  out.print("女");
+                } else {
+                  out.print("男");
+                }
+              %>
             </td></tr>
-        <tr><th colspan="2" style="text-align: center">个人简介：</td></tr>
-        <tr><td colspan="2" style="text-align: left"><%=expert.getEptIntroduce()%></td></tr>
-    </table>
-    <%
-        } else {
-            out.print("未找到该专家!");
-        }
-    %>
+          <tr><th>职称：</th><td><%=expert.getEptZhichen()%></td>
+            <th>专业特长：</th><td><%=expert.getEptFeature()%></td></tr>
+          <tr><th>所在单位：</th><td><%=expert.getEptOrganization()%></td>
+            <th>联系地址：</th><td><%=expert.getEptAddress()%></td></tr>
+          <tr><th>电话：</th><td><%=expert.getEptPhone()%></td>
+            <th>邮编：</th><td><%=expert.getEptPostcode()%></td></tr>
+          <tr><th>邮箱：</th><td><%=expert.getEptEmail()%></td>
+              <!--th>个人网站：</th><td><%=expert.getEptWeb()%></td></tr-->
+            <th colspan="2" style="text-align: left;">
+              <a style=" text-decoration:none;" href="${pageContext.request.contextPath}/functionPage/expertHelp.jsp?expId=<%=expert.getEptId()%>">
+                <span  style="text-align: left; font-size: 16px; color:green">向该专家提问</span>
+              </a>
+            </th></tr>
+        </table>
+      </td><td width="150px">
+        <table id="photo" class="theform" >
+          <tr><td><img src="<%=expert.getEptPhotoUrl()%>"/></td></tr>
+        </table>
+      </td></tr>
+    <tr><th colspan="2" style="text-align: center">个人简介：</td></tr>
+    <tr><td colspan="2" style="text-align: left"><div style="padding:5px"><%=expert.getEptIntroduce()%></div></td></tr>
+  </table>
+  <%
+    } else {
+      out.print("未找到该专家!");
+    }
+  %>
 
 </div>

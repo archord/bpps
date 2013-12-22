@@ -4,6 +4,7 @@
  */
 package com.bpps.dao;
 
+import com.bpps.pojo.Symptom;
 import com.bpps.pojo.SymptomDisease;
 import com.jdbc.DatabaseManager;
 import java.sql.ResultSet;
@@ -24,11 +25,35 @@ public class SymDisDAO {
 
     private static final Log log = LogFactory.getLog(DiseaseDAO.class);
 
-    public Map<Integer,Integer> getDiscribeByPosDisId(int posId, int disId){
+    public List<Integer> getDiscribeIdsByPosDisSymId(int posId, int disId, int symId) {
+        log.debug("get Discribe by posid, disid and symid");
+
+        try {
+            List<Integer> objs = new ArrayList<Integer>();
+            //String sql = "select * from symptom_disease where sym_dis_discribe!=0 and pos_id=" + posId + " and dis_id=" + disId;
+            String sql = "SELECT sd.*, s.sym_property "
+                    + "FROM symptom_disease sd "
+                    + "INNER JOIN symptom s ON sd.sym_id=s.sym_id "
+                    + "WHERE sd.sym_dis_discribe!=0 and sd.pos_id=" + posId + " and sd.dis_id=" + disId + "and sd.sym_id=" + symId;
+            //System.out.println(sql);
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                objs.add(rs.getInt("sym_dis_discribe"));
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public Map<Integer, Integer> getDiscribeByPosDisId(int posId, int disId) {
         log.debug("get All Symptom ID");
 
         try {
-            Map<Integer,Integer> objs = new HashMap<Integer,Integer>();
+            Map<Integer, Integer> objs = new HashMap<Integer, Integer>();
             String sql = "select * from symptom_disease where pos_id=" + posId + " and dis_id=" + disId;
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
@@ -53,7 +78,7 @@ public class SymDisDAO {
      *      等于1：sym_property的取值为1且sym_dis_discribe的取值为1为布尔值（是），或，sym_property的取值为2且sym_dis_discribe的取值为1为症状描述所的id
      *      大于1：症状描述所的id
      */
-    public List<String> getStrDiscribeByPosDisId(int posId, int disId){
+    public List<String> getStrDiscribeByPosDisId(int posId, int disId) {
         log.debug("get All Symptom ID");
 
         try {
@@ -67,10 +92,11 @@ public class SymDisDAO {
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             while (rs.next()) {
-                if(rs.getInt("sym_property")==1&&rs.getInt("sym_dis_discribe")==1)
-                    objs.add(rs.getInt("sym_id")+"_0");//为了避免前面注释所描述的问题，在这里做特殊处理，将1编码为0，以方便后面的统一集合操作
-                else
-                    objs.add(rs.getInt("sym_id")+"_"+rs.getInt("sym_dis_discribe"));
+                if (rs.getInt("sym_property") == 1 && rs.getInt("sym_dis_discribe") == 1) {
+                    objs.add(rs.getInt("sym_id") + "_0");//为了避免前面注释所描述的问题，在这里做特殊处理，将1编码为0，以方便后面的统一集合操作
+                } else {
+                    objs.add(rs.getInt("sym_id") + "_" + rs.getInt("sym_dis_discribe"));
+                }
             }
             dbm.close();
             return objs;
@@ -80,7 +106,7 @@ public class SymDisDAO {
         }
     }
 
-    public List<SymptomDisease> getSymDisByPosDisId(int posId, int disId){
+    public List<SymptomDisease> getSymDisByPosDisId(int posId, int disId) {
         log.debug("get All Symptom ID");
 
         try {
@@ -103,8 +129,38 @@ public class SymDisDAO {
             return null;
         }
     }
-    
-    public List<SymptomDisease> getSymDisBySymId(int symId){
+
+    public List<SymptomDisease> getAssSymDisByPosDisId(int posId, int disId) {
+        log.debug("get All Symptom ID");
+
+        try {
+            List<SymptomDisease> objs = new ArrayList<SymptomDisease>();
+            //String sql = "select * from symptom_disease where pos_id=" + posId + " and dis_id=" + disId + " order by sym_id";
+            String sql = "select sd.*, s.sym_name "
+                    + "from symptom_disease sd "
+                    + "LEFT JOIN symptom s ON s.sym_id = sd.sym_id "
+                    + "where sd.pos_id=" + posId + " and sd.dis_id=" + disId + " AND sd.sym_dis_discribe!=0 "
+                    + "order by sd.sym_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                SymptomDisease obj = new SymptomDisease();
+                obj.setPosId(rs.getInt("pos_id"));
+                obj.setDisId(rs.getInt("dis_id"));
+                obj.setSymId(rs.getInt("sym_id"));
+                obj.setSymName(rs.getString("sym_name"));
+                obj.setSymDisDiscribe(rs.getString("sym_dis_discribe"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<SymptomDisease> getSymDisBySymId(int symId) {
         log.debug("get SymptomDisease by sym ID");
 
         try {
@@ -183,11 +239,31 @@ public class SymDisDAO {
         dbm.close();
     }
 
+    public void addSymDisByPosDisSymId(int posId, int disId, int symId, String symDess[]) {
+        log.debug("add symptom and disease status");
+
+        DatabaseManager dbm = new DatabaseManager();
+        for (String symDes : symDess) {
+            String sql = "insert into symptom_disease(pos_id, sym_id, dis_id, sym_dis_discribe)values(" + posId + "," + symId + "," + disId + "," + symDes + ")";
+            dbm.doExecute(sql);
+        }
+        dbm.close();
+    }
+
     public void deleteSymDisByDisId(int posId, int disId) {
         log.debug("delete symptom and disease status");
 
         DatabaseManager dbm = new DatabaseManager();
         String sql = "delete from symptom_disease where pos_id=" + posId + " and dis_id=" + disId;
+        dbm.doExecute(sql);
+        dbm.close();
+    }
+
+    public void deleteSymDisByPosDisSymId(int posId, int disId, int symId) {
+        log.debug("delete symptom and disease status");
+
+        DatabaseManager dbm = new DatabaseManager();
+        String sql = "delete from symptom_disease where pos_id=" + posId + " and dis_id=" + disId + " and sym_id=" + symId;
         dbm.doExecute(sql);
         dbm.close();
     }
@@ -222,7 +298,7 @@ public class SymDisDAO {
         dbm.close();
     }
 
-    public void updateSymDisStatus(DatabaseManager dbm, int posId, int symId, Map<Integer,Integer> disChecked, Map<Integer,Integer> disUnchecked) {
+    public void updateSymDisStatus(DatabaseManager dbm, int posId, int symId, Map<Integer, Integer> disChecked, Map<Integer, Integer> disUnchecked) {
         log.debug("update symptom and disease status");
 
         //DatabaseManager dbm = new DatabaseManager();
@@ -230,13 +306,13 @@ public class SymDisDAO {
         Set<Integer> disSet = disChecked.keySet();
         Object intDis[] = disSet.toArray();
         for (Object disease : intDis) {
-            Object[] objs = {disChecked.get((Integer)disease), posId, symId, disease};
+            Object[] objs = {disChecked.get((Integer) disease), posId, symId, disease};
             dbm.doExecute(sql, objs);
         }
         disSet = disUnchecked.keySet();
         intDis = disSet.toArray();
         for (Object disease : intDis) {
-            Object[] objs = {disUnchecked.get((Integer)disease), posId, symId, disease};
+            Object[] objs = {disUnchecked.get((Integer) disease), posId, symId, disease};
             dbm.doExecute(sql, objs);
         }
         //dbm.close();

@@ -177,7 +177,7 @@ String labelId = request.getParameter("labelId");
             out.print("/manage/pages/symptom/symptomImageDetail.jsp?siId=");
             out.print(symptomDiscribe.getSiId());
             out.print("'>查看</a>");
-            out.print("</td><td><a href='");
+            out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
             out.print(request.getContextPath());
             out.print("/symptomImageAction.do?method=deleteAction&siId=");
             out.print(symptomDiscribe.getSiId());

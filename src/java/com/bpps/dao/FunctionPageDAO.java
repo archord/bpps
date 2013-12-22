@@ -57,6 +57,36 @@ public class FunctionPageDAO {
         }
     }
 
+    public List<FunctionPage> getFunctionPagesByLabelId(long labelId, boolean isHG) {
+        log.debug("get all functionPage!");
+
+        try {
+            List<FunctionPage> objs = new ArrayList<FunctionPage>();
+            String sql = "select * from function_page where only_hg_show=0 and label_id=" + labelId;
+            if(isHG){
+                sql = "select * from function_page where label_id=" + labelId;
+            }
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                FunctionPage obj = new FunctionPage();
+                obj.setPageId(rs.getLong("page_id"));
+                obj.setName(rs.getString("name"));
+                obj.setIspage(rs.getShort("ispage"));
+                obj.setArticleId(rs.getLong("article_id"));
+                obj.setUrl(rs.getString("url"));
+                obj.setLabelId(rs.getLong("label_id"));
+                obj.setOnlyHGShow(rs.getInt("only_hg_show"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
     public HashMap<String, String> getUrlsByLabelId(long labelId, boolean isHG) {
         log.debug("get urls by label id!");
         try {

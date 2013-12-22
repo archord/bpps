@@ -122,7 +122,7 @@ request.setCharacterEncoding("UTF-8");
             out.print("/labelAction.do?method=updateAction&labelId=");
             out.print(label.getLabelId());
             out.print("'>修改</a>");
-            out.print("</td><td><a href='");
+            out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
             out.print(request.getContextPath());
             out.print("/labelAction.do?method=deleteAction&labelId=");
             out.print(label.getLabelId());

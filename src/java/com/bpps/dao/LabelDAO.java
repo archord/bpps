@@ -64,6 +64,44 @@ public class LabelDAO {
         }
     }
     
+    public List<LabelSystem> getLabelsForFunctionPage() {
+        log.debug("get all level 1 label!");
+
+        try {
+            List<LabelSystem> objs = new ArrayList<LabelSystem>();
+            String sql = "select ls1.*, ls2.name pname, fp.name pageName "
+                    + "from label_system ls1 "
+                    + "LEFT JOIN label_system ls2 ON ls2.label_id = ls1.pid "
+                    + "LEFT JOIN Function_Page fp ON fp.page_id = ls1.pageid "
+                    + "WHERE ls1.pid = 0 or (ls1.iscrop != 1 and  ls1.label_id !=0)"
+                    + "ORDER BY ls1.label_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                LabelSystem obj = new LabelSystem();
+                obj.setIsactive(rs.getShort("isactive"));
+                obj.setIscrop(rs.getShort("iscrop"));
+                obj.setLabelId(rs.getLong("label_id"));
+                obj.setName(rs.getString("name"));
+                obj.setPageid(rs.getLong("pageid"));
+                obj.setPid(rs.getLong("pid"));
+                obj.setUrl(rs.getString("url"));
+                obj.setPageName(rs.getString("pageName"));
+                obj.setpName(rs.getString("pname"));
+                obj.setLevel1(rs.getLong("level1"));
+                obj.setLevel2(rs.getLong("level2"));
+                obj.setLevel3(rs.getLong("level3"));
+                obj.setChildNum(rs.getInt("child_num"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
     public List<LabelSystem> getMenuLabels() {
         log.debug("get all level 1 menu label!");
 
@@ -92,6 +130,46 @@ public class LabelDAO {
                 obj.setLevel2(rs.getLong("level2"));
                 obj.setLevel3(rs.getLong("level3"));
                 obj.setChildNum(rs.getInt("child_num"));
+                obj.setMenuOrder(rs.getInt("menu_order"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<LabelSystem> getMenuLabelsOrderByOrder() {
+        log.debug("get all level 1 menu label!");
+
+        try {
+            List<LabelSystem> objs = new ArrayList<LabelSystem>();
+            String sql = "select ls1.*, ls2.name pname, fp.name pageName "
+                    + "from label_system ls1 "
+                    + "LEFT JOIN label_system ls2 ON ls2.label_id = ls1.pid "
+                    + "LEFT JOIN Function_Page fp ON fp.page_id = ls1.pageid "
+                    + "WHERE ls1.pid = 0 and ls1.isactive=1"
+                    + "ORDER BY ls1.menu_order";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                LabelSystem obj = new LabelSystem();
+                obj.setIsactive(rs.getShort("isactive"));
+                obj.setIscrop(rs.getShort("iscrop"));
+                obj.setLabelId(rs.getLong("label_id"));
+                obj.setName(rs.getString("name"));
+                obj.setPageid(rs.getLong("pageid"));
+                obj.setPid(rs.getLong("pid"));
+                obj.setUrl(rs.getString("url"));
+                obj.setPageName(rs.getString("pageName"));
+                obj.setpName(rs.getString("pname"));
+                obj.setLevel1(rs.getLong("level1"));
+                obj.setLevel2(rs.getLong("level2"));
+                obj.setLevel3(rs.getLong("level3"));
+                obj.setChildNum(rs.getInt("child_num"));
+                obj.setMenuOrder(rs.getInt("menu_order"));
                 objs.add(obj);
             }
             dbm.close();
@@ -151,6 +229,44 @@ public class LabelDAO {
                     + "LEFT JOIN label_system ls2 ON ls2.label_id = ls1.pid "
                     + "LEFT JOIN Function_Page fp ON fp.page_id = ls1.pageid "
                     + "WHERE ls1.pid != 0 and ls1.iscrop=1 and ls1.isactive=1"
+                    + "ORDER BY ls1.label_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                LabelSystem obj = new LabelSystem();
+                obj.setIsactive(rs.getShort("isactive"));
+                obj.setIscrop(rs.getShort("iscrop"));
+                obj.setLabelId(rs.getLong("label_id"));
+                obj.setName(rs.getString("name"));
+                obj.setPageid(rs.getLong("pageid"));
+                obj.setPid(rs.getLong("pid"));
+                obj.setUrl(rs.getString("url"));
+                obj.setPageName(rs.getString("pageName"));
+                obj.setpName(rs.getString("pname"));
+                obj.setLevel1(rs.getLong("level1"));
+                obj.setLevel2(rs.getLong("level2"));
+                obj.setLevel3(rs.getLong("level3"));
+                obj.setChildNum(rs.getInt("child_num"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<LabelSystem> getAllCrops() {
+        log.debug("get crop types!");
+
+        try {
+            List<LabelSystem> objs = new ArrayList<LabelSystem>();
+            String sql = "select ls1.*, ls2.name pname, fp.name pageName "
+                    + "from label_system ls1 "
+                    + "LEFT JOIN label_system ls2 ON ls2.label_id = ls1.pid "
+                    + "LEFT JOIN Function_Page fp ON fp.page_id = ls1.pageid "
+                    + "WHERE ls1.pid != 0 and ls1.iscrop=1"
                     + "ORDER BY ls1.label_id";
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
@@ -389,6 +505,16 @@ public class LabelDAO {
         String sql = "UPDATE label_system ls1 SET child_num = (SELECT COUNT(*) FROM label_system ls2 WHERE ls2.pid=ls1.label_id)";
         DatabaseManager dbm = new DatabaseManager();
         dbm.doExecute(sql);
+        dbm.close();
+    }
+
+    public void updateLabelOrder(long id, int order) {
+        log.debug("update Label order");
+
+        String sql = "update label_system set menu_order = ? where label_id = ?";
+        DatabaseManager dbm = new DatabaseManager();
+        Object[] objs = {order, id};
+        dbm.doExecute(sql, objs);
         dbm.close();
     }
     

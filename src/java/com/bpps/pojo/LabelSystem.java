@@ -22,6 +22,7 @@ public class LabelSystem extends org.apache.struts.action.ActionForm  implements
     private Long level2;
     private Long level3;
     private int childNum;
+    private int menuOrder;
 
     public LabelSystem() {
     }
@@ -208,6 +209,20 @@ public class LabelSystem extends org.apache.struts.action.ActionForm  implements
      */
     public void setChildNum(int childNum) {
         this.childNum = childNum;
+    }
+
+    /**
+     * @return the menuOrder
+     */
+    public int getMenuOrder() {
+        return menuOrder;
+    }
+
+    /**
+     * @param menuOrder the menuOrder to set
+     */
+    public void setMenuOrder(int menuOrder) {
+        this.menuOrder = menuOrder;
     }
     
 }

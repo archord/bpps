@@ -63,7 +63,7 @@
                                 <tr>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">姓名</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">性别</th>
-                                    <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">职称</th>
+                                    <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">专业特长</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">地址</th>
                                     <!--th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">照片链接</th-->
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;" width="50px">修改</th>
@@ -85,10 +85,10 @@
                                             else
                                                 out.print("女");
                                             out.print("</td><td>");
-                                            if(article1.getEptZhichen()==null || article1.getEptZhichen().equals(""))
+                                            if(article1.getEptFeature()==null || article1.getEptFeature().equals(""))
                                                 out.print("无");
                                             else
-                                                out.print(article1.getEptZhichen());
+                                                out.print(article1.getEptFeature());
                                             out.print("</td><td>");
                                             if(article1.getEptAddress()==null || article1.getEptAddress().equals(""))
                                                 out.print("无");
@@ -104,7 +104,7 @@
                                             out.print("/expertAction.do?method=updateAction&eptId=");
                                             out.print(article1.getEptId());
                                             out.print("'>修改</a>");
-                                            out.print("</td><td><a href='");
+                                            out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
                                             out.print(request.getContextPath());
                                             out.print("/expertAction.do?method=deleteAction&eptId=");
                                             out.print(article1.getEptId());

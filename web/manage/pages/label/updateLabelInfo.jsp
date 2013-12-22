@@ -18,6 +18,9 @@
     gm.generateHeadJSP(path);
     path = request.getSession().getServletContext().getRealPath("/") + "WEB-INF\\jspf\\mutil_level_selectbox.jspf";
     gm.generateMultiLevelSelectBoxJSP(path);
+    path = request.getSession().getServletContext().getRealPath("/") + "WEB-INF\\jspf\\";
+    gm.generatePosDisSymJSP(path);
+    //gm.generatePosDisSymJSP(path);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

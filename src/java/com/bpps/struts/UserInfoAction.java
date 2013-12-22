@@ -79,7 +79,10 @@ public class UserInfoAction extends DispatchAction {
         if(!strId.isEmpty()){
             Integer posId = Integer.parseInt(strId);
             UserInfoDAO dao= new UserInfoDAO();
-            dao.deletePosition(posId);
+            UserInfo user = dao.getUserById(strId);
+            if(!user.getUserName().equalsIgnoreCase("root")) {
+                dao.deletePosition(posId);
+            }
         }
 
         return mapping.findForward(forward);

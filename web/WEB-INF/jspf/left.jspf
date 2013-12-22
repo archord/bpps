@@ -42,12 +42,12 @@
 
     <div id="cooperation">
         <ul class="title">合作单位</ul>
-        <li class="logo">
+        <!--li class="logo" style="list-style-type:none"></li-->
             <a href="http://www.plantwise.org/" target="_blank" title="Plantwise">
-                <img src="<%=urlPath%>/attached/image/sysimg/plantwise_logo.jpg" width="178px"/></a></li>
-        <li class="logo">
+                <img src="<%=urlPath%>/attached/image/sysimg/plantwise_logo.jpg" width="178px"/></a><br/><hr><br/>
+        <!--li class="logo" style="list-style-type:none"></li-->
             <a href="http://www.cabi.org/" target="_blank" title="CABI">
-                <img src="<%=urlPath%>/attached/image/sysimg/cabi_word_logo.jpg" width="178px"/></a></li>
+                <img src="<%=urlPath%>/attached/image/sysimg/cabi_word_logo.jpg" width="178px"/></a>
 
     </div>
 </div>

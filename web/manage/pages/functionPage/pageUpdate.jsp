@@ -70,7 +70,8 @@ FunctionPage functionPage = (FunctionPage)request.getAttribute("detail");
 
 <%
         LabelDAO labelDAO = new LabelDAO();
-        List<LabelSystem> level1 = labelDAO.getLevel1Labels();
+        //getLevel1Labels
+        List<LabelSystem> level1 = labelDAO.getLabelsForFunctionPage();
 
         out.print("<option value=\"0\">无</option>");
         if(level1!=null && !level1.isEmpty())

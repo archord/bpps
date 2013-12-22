@@ -28,6 +28,8 @@ public class Expert extends org.apache.struts.action.ActionForm implements Seria
     private String eptIntroduce;
     private String eptPhotoUrl;
     private FormFile eptPhoto;
+    private String eptFeature;
+    private String eptOrganization;
 
     public Expert() {
     }
@@ -228,6 +230,40 @@ public class Expert extends org.apache.struts.action.ActionForm implements Seria
      */
     public void setEptPhoto(FormFile eptPhoto) {
         this.eptPhoto = eptPhoto;
+    }
+
+    /**
+     * @return the eptFeature
+     */
+    public String getEptFeature() {
+        return eptFeature;
+    }
+
+    /**
+     * @param eptFeature the eptFeature to set
+     */
+    public void setEptFeature(String eptFeature) {
+        if(eptFeature==null || eptFeature.equals("")){
+            this.eptFeature="";
+        }else
+        this.eptFeature = eptFeature;
+    }
+
+    /**
+     * @return the eptOrganization
+     */
+    public String getEptOrganization() {
+        return eptOrganization;
+    }
+
+    /**
+     * @param eptOrganization the eptOrganization to set
+     */
+    public void setEptOrganization(String eptOrganization) {
+        if(eptOrganization==null || eptOrganization.equals("")){
+            this.eptOrganization="";
+        }else
+        this.eptOrganization = eptOrganization;
     }
     
 }

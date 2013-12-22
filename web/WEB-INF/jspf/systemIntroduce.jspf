@@ -12,5 +12,8 @@
 %>
 
 <div id="mainCenter">
+  
+  <div style="padding: 5px">
     <%=article.getArticleContent()%>
+  </div>
 </div>

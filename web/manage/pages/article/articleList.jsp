@@ -93,7 +93,7 @@ request.setCharacterEncoding("UTF-8");
             out.print("/articleAction.do?method=updateAction&articleId=");
             out.print(article1.getArticleId());
             out.print("'>修改</a>");
-            out.print("</td><td><a href='");
+            out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
             out.print(request.getContextPath());
             out.print("/articleAction.do?method=deleteAction&articleId=");
             out.print(article1.getArticleId());

@@ -87,6 +87,61 @@ public class SymptomDAO {
         }
     }
 
+    //获得多属性的症状，而不是单属性的症状
+    public List<Symptom> getMutilAttrSymptomsByPosId(int posId) {
+        log.debug("get Symptoms by posid");
+
+        try {
+            List<Symptom> objs = new ArrayList<Symptom>();
+            String sql = "select * from symptom where pos_id="+posId + " and sym_property=2 order by sym_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                Symptom obj = new Symptom();
+                obj.setSymId(rs.getInt("sym_id"));
+                obj.setPosId(rs.getInt("pos_id"));
+                obj.setSymName(rs.getString("sym_name"));
+                obj.setSymProperty(rs.getInt("sym_property"));
+                obj.setParentSymId(rs.getInt("parent_sym_id"));
+                obj.setHasChild(rs.getInt("has_child"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    //获得所有多属性的症状，而不是单属性的症状
+    public List<Symptom> getAllMutilAttrSymptoms() {
+        log.debug("get Symptoms by posid");
+
+        try {
+            List<Symptom> objs = new ArrayList<Symptom>();
+            String sql = "select * from symptom where sym_property=2 order by sym_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                Symptom obj = new Symptom();
+                obj.setSymId(rs.getInt("sym_id"));
+                obj.setPosId(rs.getInt("pos_id"));
+                obj.setSymName(rs.getString("sym_name"));
+                obj.setSymProperty(rs.getInt("sym_property"));
+                obj.setParentSymId(rs.getInt("parent_sym_id"));
+                obj.setHasChild(rs.getInt("has_child"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
     public List<Symptom> getParSymptomsByPosId(int posId) {
         log.debug("get Symptoms by posid");
 
@@ -253,7 +308,7 @@ public class SymptomDAO {
         }
     }
 
-    public List getSymptoms2ByPosId(int posId) {
+    public List<Symptom2> getSymptoms2ByPosId(int posId) {
         log.debug("get All Symptom");
 
         try {

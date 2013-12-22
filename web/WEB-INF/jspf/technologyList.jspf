@@ -1,0 +1,65 @@
+<%@page import="com.bpps.pojo.Article"%>
+<%@page import="com.bpps.dao.ArticleDAO"%>
+<%@page import="com.bpps.pojo.LabelSystem"%>
+<%@page import="com.bpps.dao.LabelDAO"%>
+<%@page import="com.util.MyTools"%>
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.pojo.Disease"%>
+<%@page import="com.bpps.dao.DiseaseDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+    String labelIdStr = request.getParameter("labelId");
+    int labelId = -1;
+    LabelSystem label = null;
+    if (labelIdStr != null && !labelIdStr.isEmpty()) {
+        labelId = Integer.parseInt(labelIdStr);
+        LabelDAO labelDAO = new LabelDAO();
+        label = labelDAO.getLabelById(labelId);
+    }
+
+%>
+
+<div id="mainCenter">
+
+    <div id="article_header">
+        <%
+            if(null == label){
+                out.print("实用技术");
+            }else{
+                out.print(label.getName());
+            }
+        %>
+    </div>
+    <table>
+        <tr>
+            <th style="text-align: center;text-height: 25px; font-size: 16px; color: black;font-weight: bold;">实用技术名称</th>
+            <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">实用技术信息简介</th></tr>
+
+        <%
+            if(labelId != -1){
+            ArticleDAO articleDAO = new ArticleDAO();
+            List<Article> articles = articleDAO.getArticlesByLabelId(labelId);
+
+            if (articles == null || articles.isEmpty()) {
+                out.print("<tr><td colspan=2>系统中暂时没有数据，请插入数据！</td></tr>");
+            } else {
+                for (Article article : articles) {
+                    out.print("<tr><td style=\"text-align: center;width: 25%;height:30px;\"><a href='");
+                    out.print(request.getContextPath());
+                    out.print("/functionPage/technology.jsp?articleId=");
+                    out.print(article.getArticleId());
+                    out.print("'  target=\"preventionPage\">");
+                    out.print(article.getArticleName());
+                    out.print("</a></td><td style=\"text-align: left;;width: 75%;\">");
+                    String tmp = MyTools.splitAndFilterString(article.getArticleContent(), 35);
+                    out.print(tmp);                    
+                    out.print("</td></tr>");
+                }
+            }
+            }
+        %>
+
+    </table>
+</div>

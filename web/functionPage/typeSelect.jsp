@@ -12,7 +12,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>黄瓜主要病害标准化远程智能诊断系统Beta1</title>
+        <title>农作物病虫害诊断与防治决策系统</title>
         <link href="ui/layout.css" rel="stylesheet" type="text/css"/>
         <!--script language="javascript" type="text/javascript" src="js/jquery.js"></script-->
     </head>

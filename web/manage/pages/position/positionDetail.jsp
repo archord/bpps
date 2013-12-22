@@ -72,8 +72,8 @@ table td
         out.print("<td width=\"20px\">" + index++ + "、" + "</td>");
         out.print("<td >" + symptom.getSymName()+"：</td>");
         if(symptom.getSymProperty()==1){
-            out.print("<td width=\"80px\"><span class=checkbox><input type=\"radio\" name=\""+ symptom.getSymId() +"\" value=\"1\"/>&nbsp;是</span></td>");
-            out.print("<td width=\"80px\"><span class=checkbox><input type=\"radio\" name=\""+ symptom.getSymId() +"\" value=\"0\"/>&nbsp;否</span></td>");
+            out.print("<td width=\"80px\"><span class=checkbox><input type=\"radio\" name=\""+ symptom.getSymId() +"\" value=\"1\" onclick=\"changeRadioValue(this)\"/>&nbsp;是</span></td>");
+            out.print("<td width=\"80px\"><span class=checkbox><input type=\"radio\" name=\""+ symptom.getSymId() +"\" value=\"0\" onclick=\"changeRadioValue(this)\"/>&nbsp;否</span></td>");
         }else{
             out.print("<td colspan=2><table> <tr> ");
             List<SymptomDiscribe> symptomDiscribes = symptomDiscribeDAO.getSymptomDiscribesBySymId(symptom.getSymId());
@@ -133,17 +133,30 @@ table td
         <script type="text/javascript">
 
             function changeRadioValue(obj) {
-                var radio=obj;
-                if (radio.tag==1)
-                {
-                    radio.checked=false;
-                    radio.tag=0;
+
+//                if(obj.checked==true){
+//                    obj.checked=false;
+//                }
+//                else{
+//                    obj.checked=true;
+//                }
+                var radios = document.getElementsByName(obj.name);
+                for(var i=0; i<radios.length; i++){
+                    if(radios[i]==obj){
+                        if (obj.tag==1)
+                        {
+                            obj.checked=false;
+                            obj.tag=0;
+                        }
+                        else
+                        {
+                            obj.tag=1;
+                        }
+                    }else{
+                        radios[i].tag=0;
+                    }
                 }
-                else
-                {
-                    radio.checked=true;
-                    radio.tag=1
-                }
+
             }
         </script>
     </body>
