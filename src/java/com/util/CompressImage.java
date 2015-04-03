@@ -8,9 +8,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
 public class CompressImage {
 
     private File file = null; // 文件对象
@@ -113,8 +110,7 @@ public class CompressImage {
                 tag.getGraphics().drawImage(img.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH), 0, 0, null);
                 FileOutputStream out = new FileOutputStream(outputDir + outputFileName);
                 // JPEGImageEncoder可适用于其他图片类型的转换
-                JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-                encoder.encode(tag);
+                ImageIO.write(tag, "jpeg", out);
                 out.close();
                 //System.out.println("压缩成功");
             }
