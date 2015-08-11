@@ -50,13 +50,13 @@ public class DiseaseDAO {
             return null;
         }
     }
-    
+
     public List<Integer> getAllDiseaseIDByLabelId(int labelId) {
         log.debug("get All Disease ID by labelId");
 
         try {
             List<Integer> objs = new ArrayList<Integer>();
-            String sql = "select dis_id from disease where label_id = "+ labelId;
+            String sql = "select dis_id from disease where label_id = " + labelId;
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             while (rs.next()) {
@@ -83,6 +83,80 @@ public class DiseaseDAO {
             while (rs.next()) {
                 Disease obj = new Disease();
                 obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
+                obj.setDisName(rs.getString("dis_name"));
+                obj.setDisNameEn(rs.getString("dis_name_en"));
+                obj.setDisIntroduction(rs.getString("dis_introduction"));
+                //obj.setDisContent(rs.getString("dis_content"));
+                clob = (oracle.sql.CLOB) rs.getClob("dis_content");
+                obj.setDisContent(MyTools.ClobToString(clob));
+                obj.setDisImagePath(rs.getString("dis_image_path"));
+                obj.setLabelId(rs.getInt("label_id"));
+                clob = (oracle.sql.CLOB) rs.getClob("DIS_PREVENTION_CONTENT");
+                obj.setDisPreventionContent(MyTools.ClobToString(clob));
+                clob = (oracle.sql.CLOB) rs.getClob("DIS_SPECTRUM");
+                obj.setDisSpectrum(MyTools.ClobToString(clob));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Disease> getDiseases(String labelId, String disType) {
+        log.debug("get Diseases by labelId, disType, posId");
+
+        try {
+            List<Disease> objs = new ArrayList<Disease>();
+            String sql = "select d.* from disease d "
+                    + " where d.dis_type="+disType +" and d.label_id="+labelId;
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            CLOB clob = null;
+            while (rs.next()) {
+                Disease obj = new Disease();
+                obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
+                obj.setDisName(rs.getString("dis_name"));
+                obj.setDisNameEn(rs.getString("dis_name_en"));
+                obj.setDisIntroduction(rs.getString("dis_introduction"));
+                //obj.setDisContent(rs.getString("dis_content"));
+                clob = (oracle.sql.CLOB) rs.getClob("dis_content");
+                obj.setDisContent(MyTools.ClobToString(clob));
+                obj.setDisImagePath(rs.getString("dis_image_path"));
+                obj.setLabelId(rs.getInt("label_id"));
+                clob = (oracle.sql.CLOB) rs.getClob("DIS_PREVENTION_CONTENT");
+                obj.setDisPreventionContent(MyTools.ClobToString(clob));
+                clob = (oracle.sql.CLOB) rs.getClob("DIS_SPECTRUM");
+                obj.setDisSpectrum(MyTools.ClobToString(clob));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Disease> getDiseases(String labelId, String disType, String posId) {
+        log.debug("get Diseases by labelId, disType, posId");
+
+        try {
+            List<Disease> objs = new ArrayList<Disease>();
+            String sql = "select d.* from disease d "
+                    + " inner join position_disease pd on pd.dis_id=d.dis_id and pos_dis_flag=1 and pd.pos_id="+posId
+                    + " where d.dis_type="+disType +" and d.label_id="+labelId;
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            CLOB clob = null;
+            while (rs.next()) {
+                Disease obj = new Disease();
+                obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
                 obj.setDisName(rs.getString("dis_name"));
                 obj.setDisNameEn(rs.getString("dis_name_en"));
                 obj.setDisIntroduction(rs.getString("dis_introduction"));
@@ -110,13 +184,14 @@ public class DiseaseDAO {
 
         try {
             List<Disease> objs = new ArrayList<Disease>();
-            String sql = "select * from disease where label_id = "+ labelId +" order by dis_id";
+            String sql = "select * from disease where label_id = " + labelId + " order by dis_id";
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             CLOB clob = null;
             while (rs.next()) {
                 Disease obj = new Disease();
                 obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
                 obj.setDisName(rs.getString("dis_name"));
                 obj.setDisNameEn(rs.getString("dis_name_en"));
                 obj.setDisIntroduction(rs.getString("dis_introduction"));
@@ -138,13 +213,13 @@ public class DiseaseDAO {
             return null;
         }
     }
-    
+
     public List<Disease> getDiseasesByPosId(int posId) {
         log.debug("get All Disease by pos id");
 
         try {
             List<Disease> objs = new ArrayList<Disease>();
-            String sql = "select d.* from disease d, position_disease pd where  d.dis_id = pd.dis_id and pd.pos_id=" +posId+ " and pd.pos_dis_flag=1 order by d.dis_id";
+            String sql = "select d.* from disease d, position_disease pd where  d.dis_id = pd.dis_id and pd.pos_id=" + posId + " and pd.pos_dis_flag=1 order by d.dis_id";
             //System.out.println(sql);
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
@@ -152,6 +227,7 @@ public class DiseaseDAO {
             while (rs.next()) {
                 Disease obj = new Disease();
                 obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
                 obj.setDisName(rs.getString("dis_name"));
                 obj.setDisNameEn(rs.getString("dis_name_en"));
                 obj.setDisIntroduction(rs.getString("dis_introduction"));
@@ -179,7 +255,7 @@ public class DiseaseDAO {
 
         try {
             List<Disease> objs = new ArrayList<Disease>();
-            String sql = "select d.*, pd.pos_dis_image_path from disease d, position_disease pd where  d.dis_id = pd.dis_id and pd.pos_id=" +posId+ " and pd.pos_dis_flag=1 order by d.dis_id";
+            String sql = "select d.*, pd.pos_dis_image_path from disease d, position_disease pd where  d.dis_id = pd.dis_id and pd.pos_id=" + posId + " and pd.pos_dis_flag=1 order by d.dis_id";
             //System.out.println(sql);
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
@@ -188,6 +264,7 @@ public class DiseaseDAO {
             while (rs.next()) {
                 Disease obj = new Disease();
                 obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
                 obj.setDisName(rs.getString("dis_name"));
                 obj.setDisNameEn(rs.getString("dis_name_en"));
                 obj.setDisIntroduction(rs.getString("dis_introduction"));
@@ -195,7 +272,7 @@ public class DiseaseDAO {
                 clob = (oracle.sql.CLOB) rs.getClob("dis_content");
                 obj.setDisContent(MyTools.ClobToString(clob));
                 imagePath = rs.getString("pos_dis_image_path");
-                if(imagePath==null||imagePath.equals("")) {
+                if (imagePath == null || imagePath.equals("")) {
                     imagePath = rs.getString("dis_image_path");
                 }
                 obj.setDisImagePath(imagePath);
@@ -213,17 +290,18 @@ public class DiseaseDAO {
         }
     }
 
-    public Disease getDiseaseById(int id){
+    public Disease getDiseaseById(int id) {
         log.debug("get Disease by ID");
 
         try {
             Disease obj = new Disease();
-            String sql = "select * from disease where dis_id = "+id;
+            String sql = "select * from disease where dis_id = " + id;
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             CLOB clob = null;
             if (rs.next()) {
                 obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
                 obj.setDisName(rs.getString("dis_name"));
                 obj.setDisNameEn(rs.getString("dis_name_en"));
                 obj.setDisIntroduction(rs.getString("dis_introduction"));
@@ -245,11 +323,11 @@ public class DiseaseDAO {
         }
     }
 
-    public void addDisease(Disease obj){
+    public void addDisease(Disease obj) {
         log.debug("add Disease");
 
         try {
-            String sql = "insert into disease(dis_name, dis_name_en, dis_introduction, dis_content, dis_image_path, label_id, DIS_PREVENTION_CONTENT, DIS_SPECTRUM)values(?,?,?,?,?,?,?,?)";
+            String sql = "insert into disease(dis_name, dis_name_en, dis_introduction, dis_content, dis_image_path, label_id, DIS_PREVENTION_CONTENT, DIS_SPECTRUM, dis_type)values(?,?,?,?,?,?,?,?,?)";
             Connection con = ConnectionFactory.getConnection();
             boolean defaultCommit = con.getAutoCommit();
             con.setAutoCommit(false);
@@ -264,8 +342,9 @@ public class DiseaseDAO {
             pStatement.setInt(6, obj.getLabelId());
             pStatement.setClob(7, CLOB.empty_lob());
             pStatement.setClob(8, CLOB.empty_lob());
+            pStatement.setInt(9, obj.getDisType());
             pStatement.execute();
-            
+
             sql = "SELECT dis_content, DIS_PREVENTION_CONTENT, DIS_SPECTRUM FROM disease WHERE dis_id = (SELECT MAX(dis_id) FROM disease) for update";
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -275,13 +354,13 @@ public class DiseaseDAO {
                 outStream.write(obj.getDisContent());
                 outStream.flush();
                 outStream.close();
-                
+
                 clob = (CLOB) rs.getClob("DIS_PREVENTION_CONTENT");
                 outStream = clob.getCharacterOutputStream();
                 outStream.write(obj.getDisPreventionContent());
                 outStream.flush();
                 outStream.close();
-                
+
                 clob = (CLOB) rs.getClob("DIS_SPECTRUM");
                 outStream = clob.getCharacterOutputStream();
                 outStream.write(obj.getDisSpectrum());
@@ -309,11 +388,11 @@ public class DiseaseDAO {
         }
     }
 
-    public void updateDisease(Disease obj){
+    public void updateDisease(Disease obj) {
         log.debug("add Disease");
 
         try {
-            String sql = "update disease set dis_name = ?, dis_name_en = ?, dis_introduction = ?, dis_image_path = ? where dis_id = ?";
+            String sql = "update disease set dis_name = ?, dis_name_en = ?, dis_introduction = ?, dis_image_path = ?, dis_type=? where dis_id = ?";
             Object[] objs = {obj.getDisName(), obj.getDisNameEn(), obj.getDisIntroduction(), obj.getDisId()};
             Connection con = ConnectionFactory.getConnection();
             boolean defaultCommit = con.getAutoCommit();
@@ -325,14 +404,15 @@ public class DiseaseDAO {
             pStatement.setString(2, obj.getDisNameEn());
             pStatement.setString(3, obj.getDisIntroduction());
             pStatement.setString(4, obj.getDisImagePath());
-            pStatement.setInt(5, obj.getDisId());
+            pStatement.setInt(5, obj.getDisType());
+            pStatement.setInt(6, obj.getDisId());
             pStatement.execute();
 
             Statement statement = con.createStatement();
             sql = "UPDATE disease SET dis_content=EMPTY_CLOB(), DIS_PREVENTION_CONTENT=EMPTY_CLOB(), DIS_SPECTRUM=EMPTY_CLOB()  WHERE dis_id = " + obj.getDisId();
             statement.executeUpdate(sql);
-            
-            sql = "SELECT dis_content, DIS_PREVENTION_CONTENT, DIS_SPECTRUM FROM disease WHERE dis_id = " + obj.getDisId() +" for update";
+
+            sql = "SELECT dis_content, DIS_PREVENTION_CONTENT, DIS_SPECTRUM FROM disease WHERE dis_id = " + obj.getDisId() + " for update";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
                 CLOB clob = (CLOB) rs.getClob("dis_content");
@@ -340,13 +420,13 @@ public class DiseaseDAO {
                 outStream.write(obj.getDisContent());
                 outStream.flush();
                 outStream.close();
-                
+
                 clob = (CLOB) rs.getClob("DIS_PREVENTION_CONTENT");
                 outStream = clob.getCharacterOutputStream();
                 outStream.write(obj.getDisPreventionContent());
                 outStream.flush();
                 outStream.close();
-                
+
                 clob = (CLOB) rs.getClob("DIS_SPECTRUM");
                 outStream = clob.getCharacterOutputStream();
                 String tmp = obj.getDisSpectrum();
@@ -371,10 +451,10 @@ public class DiseaseDAO {
         }
     }
 
-    public void deleteDisease(int id){
+    public void deleteDisease(int id) {
         log.debug("delete Disease");
 
-        String sql = "delete from disease where dis_id = "+id;
+        String sql = "delete from disease where dis_id = " + id;
         DatabaseManager dbm = new DatabaseManager();
         dbm.doExecute(sql);
         dbm.close();
@@ -383,7 +463,7 @@ public class DiseaseDAO {
         posdisDAO.deletePosDisByDisId(id);
     }
 
-    public int getMaxDisId(){
+    public int getMaxDisId() {
         log.debug("get max Disid");
 
         try {
@@ -402,13 +482,13 @@ public class DiseaseDAO {
         }
     }
 
-    public int getTotalByLabelId(int labelId){
+    public int getTotalByLabelId(int labelId) {
 
         log.debug("get total disease");
 
         try {
             int disId = 0;
-            String sql = "select count(*) from disease where label_id="+labelId;
+            String sql = "select count(*) from disease where label_id=" + labelId;
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             if (rs.next()) {

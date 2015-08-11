@@ -18,7 +18,7 @@ Disease disease = (Disease)request.getAttribute("detail");
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>病害种类修改页面</title>
+        <title>疾病种类修改页面</title>
         <!--link href="${pageContext.request.contextPath}/ui/layout.css" rel="stylesheet" type="text/css"/-->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/themes/default/default.css" />
         <link href="${pageContext.request.contextPath}/ui/skin_1/css/common.css" rel="stylesheet" type="text/css">
@@ -32,7 +32,7 @@ Disease disease = (Disease)request.getAttribute("detail");
      <table cellpadding="0" cellspacing="0" id="main-mypos">
       <tr>
         <td width="3" height="21" align="left"><img src="${pageContext.request.contextPath}/ui/skin_1/images/nav-left.gif" width="4" height="27"></td>
-        <th align="left">您的位置：病害管理 > 修改病害信息</th>
+        <th align="left">您的位置：疾病管理 > 修改疾病信息</th>
         <td width="3" align="right"><img src="${pageContext.request.contextPath}/ui/skin_1/images/rht-left.gif" ></td>
       </tr>
     </table>
@@ -42,7 +42,7 @@ Disease disease = (Disease)request.getAttribute("detail");
   <thead>
     <tr>
       <td class="pannel-head-left">&nbsp;</td>
-      <th class="pannel-head-mid">修改病害信息</th>
+      <th class="pannel-head-mid">修改疾病信息</th>
       <td class="pannel-head-right"></td>
     </tr>
   </thead>
@@ -53,26 +53,29 @@ Disease disease = (Disease)request.getAttribute("detail");
     <tr>
       <td  colspan="3" valign="top" ><!-- form(input) 默认不显示，去掉display 样式后显示-->
         <fieldset>
-        <legend>修改病害信息</legend>
+        <legend>修改疾病信息</legend>
             <form name="diseaseUpdate" method="post" action="${pageContext.request.contextPath}/diseaseAction.do?method=doUpdateAction" enctype="multipart/form-data">
                 <table  class="theform" >
-                    <tr><th>病害名称：</th>
+                    <tr><th>疾病类别：</th>
+                        <td><input type="radio" name="disType" <%if(disease.getDisType()==0)out.print("checked");%> value="0" />病害&nbsp;
+                            <input type="radio" name="disType" <%if(disease.getDisType()==1)out.print("checked");%> value="1" />虫害</td></tr>
+                    <tr><th>疾病名称：</th>
                         <td><input type="text" name="disName" value="<%=disease.getDisName()%>" />
                             <input type="hidden" name="disId" value="<%=disease.getDisId()%>"/>
                             <input type="hidden" name="labelId" value="<%=disease.getLabelId()%>"/></td></tr>
-                <tr><th>病害英文名称：</th>
+                <tr><th>疾病英文名称：</th>
                     <td><input type="text" name="disNameEn" value="<%=disease.getDisNameEn()%>" /></td></tr>
-                <tr><th>病害图片：</th>
+                <tr><th>疾病图片：</th>
                     <td><input type="file" name="disImage" value="" /><input type="hidden" name="disImagePath" value="<%=disease.getDisImagePath()%>" /></td></tr>
-                <tr><th>病害简介：</th>
+                <tr><th>疾病简介：</th>
                     <td><textarea name="disIntroduction" rows="4" cols="60"><%=disease.getDisIntroduction()%></textarea></td></tr>
-                <tr><th>病害详细内容：</th<td></td></tr>
+                <tr><th>疾病详细内容：</th<td></td></tr>
                 <tr><td colspan="2"><textarea name="disContent" cols="100" rows="6" style="width:700px;height:150px;visibility:hidden;"><%=disease.getDisContent()%></textarea>
                 </td></tr>
-                <tr><th>病害防治内容：</th<td></td></tr>
+                <tr><th>疾病防治内容：</th<td></td></tr>
                 <tr><td colspan="2"><textarea name="disPreventionContent" cols="100" rows="6" style="width:700px;height:150px;visibility:hidden;"><%=disease.getDisPreventionContent()%></textarea>
                 </td></tr>
-                <tr><th>病害高光谱特征：</th<td></td></tr>
+                <tr><th>疾病高光谱特征：</th<td></td></tr>
                 <tr><td colspan="2"><textarea name="disSpectrum" cols="100" rows="6" style="width:700px;height:150px;visibility:hidden;"><%=disease.getDisSpectrum()%></textarea>
                 </td></tr>
                 <tr><td colspan="2"><input type="submit" class="bt" name="button" value="提交内容" /> (提交快捷键: Ctrl + Enter)</td></tr>

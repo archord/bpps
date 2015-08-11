@@ -13,6 +13,7 @@ public class Disease extends org.apache.struts.action.ActionForm  implements jav
 
 
      private Integer disId;
+     private Integer disType;
      private String disName;
      private String disNameEn;
      private String disIntroduction;
@@ -143,6 +144,20 @@ public class Disease extends org.apache.struts.action.ActionForm  implements jav
      */
     public void setDisSpectrum(String disSpectrum) {
         this.disSpectrum = disSpectrum;
+    }
+
+    /**
+     * @return the disType
+     */
+    public Integer getDisType() {
+        return disType;
+    }
+
+    /**
+     * @param disType the disType to set
+     */
+    public void setDisType(Integer disType) {
+        this.disType = disType;
     }
 
 

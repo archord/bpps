@@ -4,6 +4,7 @@
  */
 package com.bpps.dao;
 
+import com.bpps.pojo.Position;
 import com.bpps.pojo.Symptom;
 import com.bpps.pojo.SymptomDisease;
 import com.jdbc.DatabaseManager;
@@ -124,6 +125,61 @@ public class SymDisDAO {
             }
             dbm.close();
             return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public Map<Position, List<SymptomDisease>> getSympDisByDisId(int disId) {
+        log.debug("get Symptoms by pos and dis id");
+
+        try {
+            Map<Position, List<SymptomDisease>> rst = new HashMap();
+            DatabaseManager dbm = new DatabaseManager();
+            List<Position> poss = new ArrayList<Position>();
+            String sql = "select p.* "
+                    + "from position p "
+                    + "inner join position_disease pd on p.pos_id=pd.pos_id and pd.pos_dis_flag=1 and pd.dis_id=" + disId;
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                Position obj = new Position();
+                obj.setPosId(rs.getInt("pos_id"));
+                obj.setPosName(rs.getString("pos_name"));
+                obj.setPosDescribe(rs.getString("pos_describe"));
+                obj.setPosImagePath(rs.getString("pos_image_path"));
+                obj.setLabelId(rs.getInt("label_id"));
+                poss.add(obj);
+            }
+
+            for (Position pos : poss) {
+                List<SymptomDisease> syms = new ArrayList<SymptomDisease>();
+                sql = "select s.*, sd.sym_dis_discribe, sd2.sym_disc_name  "
+                        + "from symptom s "
+                        + "inner join symptom_disease sd on s.sym_id=sd.sym_id and sd.sym_dis_discribe!=0 and sd.pos_id=" + pos.getPosId() + " and sd.dis_id=" + disId + " "
+                        + "left join symptom_discribe sd2 on sd.sym_dis_discribe=sd2.sym_disc_id "
+                        + "where s.sym_property!=1 "
+                        + "union "
+                        + "select s.*, sd.sym_dis_discribe, '是' "
+                        + "from symptom s "
+                        + "inner join symptom_disease sd on s.sym_id=sd.sym_id and sd.sym_dis_discribe!=0 and sd.pos_id=" + pos.getPosId() + " and sd.dis_id=" + disId + " "
+                        + "left join symptom_discribe sd2 on sd.sym_dis_discribe=sd2.sym_disc_id "
+                        + "where s.sym_property=1";
+                rs = dbm.doSelect(sql);
+                while (rs.next()) {
+                    SymptomDisease obj = new SymptomDisease();
+                    obj.setPosId(rs.getInt("pos_id"));
+                    obj.setSymId(rs.getInt("sym_id"));
+                    obj.setSymName(rs.getString("sym_name"));
+                    obj.setSymDisDiscribe(rs.getString("sym_disc_name"));
+                    syms.add(obj);
+                }
+                if (!syms.isEmpty()) {
+                    rst.put(pos, syms);
+                }
+            }
+            dbm.close();
+            return rst;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;

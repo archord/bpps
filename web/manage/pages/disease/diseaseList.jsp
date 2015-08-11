@@ -21,7 +21,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>病害种类列表页面</title>
+        <title>疾病种类列表页面</title>
         <!--link href="${pageContext.request.contextPath}/ui/layout.css" rel="stylesheet" type="text/css"/-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/js/themes/default/default.css" />
         <link href="${pageContext.request.contextPath}/ui/skin_1/css/common.css" rel="stylesheet" type="text/css">
@@ -35,7 +35,7 @@
         <table cellpadding="0" cellspacing="0" id="main-mypos">
             <tr>
                 <td width="3" height="21" align="left"><img src="${pageContext.request.contextPath}/ui/skin_1/images/nav-left.gif" width="4" height="27"></td>
-                <th align="left">您的位置：病害管理 > 病害信息列表</th>
+                <th align="left">您的位置：疾病管理 > 疾病信息列表</th>
                 <td width="3" align="right"><img src="${pageContext.request.contextPath}/ui/skin_1/images/rht-left.gif" ></td>
             </tr>
         </table>
@@ -45,7 +45,7 @@
             <thead>
                 <tr>
                     <td class="pannel-head-left">&nbsp;</td>
-                    <th class="pannel-head-mid">病害信息列表</th>
+                    <th class="pannel-head-mid">疾病信息列表</th>
                     <td class="pannel-head-right"></td>
                 </tr>
             </thead>
@@ -56,10 +56,10 @@
                 <tr>
                     <td  colspan="3" valign="top" ><!-- form(input) 默认不显示，去掉display 样式后显示-->
                         <fieldset>
-                            <legend>病害列表</legend>
+                            <legend>疾病列表</legend>
                             <table  class="theform">
-                                <tr><th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">病害名称</th>
-                                    <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">病害简介</th>
+                                <tr><th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">疾病名称</th>
+                                    <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">疾病简介</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;" width="50px">修改</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;" width="50px">删除</th></tr>
 

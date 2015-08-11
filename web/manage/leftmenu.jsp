@@ -43,15 +43,15 @@ body {
      <!--菜单开始 -->
     <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" class="left-item-s1">
         <tr>
-          <th onClick="e.hidNode('item-01')">病害管理<br></th>
+          <th onClick="e.hidNode('item-01')">疾病管理<br></th>
         </tr>
         <tr>
           <td id="item-01"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="pro-item-s1">
               <tr>
-                <th><a href="${pageContext.request.contextPath}/diseaseAction.do?method=listAction&labelId=<%=labelId%>" target="mainFrame">查看病害信息</a></th>
+                <th><a href="${pageContext.request.contextPath}/diseaseAction.do?method=listAction&labelId=<%=labelId%>" target="mainFrame">查看疾病信息</a></th>
               </tr>
               <tr>
-                <th><a href="${pageContext.request.contextPath}/manage/pages/disease/diseaseAdd.jsp?labelId=<%=labelId%>" target="mainFrame">增加病害</a></th>
+                <th><a href="${pageContext.request.contextPath}/manage/pages/disease/diseaseAdd.jsp?labelId=<%=labelId%>" target="mainFrame">增加疾病</a></th>
               </tr>
 
           </table></td>

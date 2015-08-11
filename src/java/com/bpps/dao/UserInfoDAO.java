@@ -94,6 +94,17 @@ public class UserInfoDAO {
         }
     }
 
+    
+    public void updateUserInfo(UserInfo obj) {
+        log.debug("update userInfo: "+obj.getUserId()+" "+obj.getUserName()+" "+obj.getPassword());
+
+        String sql = "update user_info set ui_name = ?, ui_password = ? where ui_id = ?";
+        DatabaseManager dbm = new DatabaseManager();
+        Object[] objs = {obj.getUserName(), obj.getPassword(), obj.getUserId()};
+        dbm.doExecute(sql, objs);
+        dbm.close();
+    }
+    
     public void deletePosition(int id){
         log.debug("add Position");
 

@@ -9,117 +9,151 @@
 
 <div id="mainCenter">
     <div style="border-bottom: 1px solid gray;">
-    <form name="addForm" method="post" action="${pageContext.request.contextPath}/expertHelpMessageAction.do?method=addAction">
-        <table id="detail" class="theform">
-            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">作物种类：</th>
-                <td style="width: 120px">
-                    
-<select id="labelId" name="labelId">
+        <form name="addForm" method="post" action="${pageContext.request.contextPath}/expertHelpMessageAction.do?method=addAction">
+            <table id="detail" class="theform">
+                <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">作物种类：</th>
+                    <td style="width: 120px">
 
-<%
-        LabelDAO labelDAO = new LabelDAO();
-        List<LabelSystem> level1 = labelDAO.getAllCrops();
+                        <select id="labelId" name="labelId">
 
-        out.print("<option value=\"0\">无</option>");
-        if(level1!=null && !level1.isEmpty())
-        for (LabelSystem label1 : level1) {
-            out.print("<option value=\"");
-            out.print(label1.getLabelId());
-            out.print("\">");
-            out.print(label1.getName());
-            out.print("</option>");
-        }
-%>
-</select>
-                </td>
-                <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">指定专家：</th>
-                <td>
- <select id="labelId" name="labelId">
+                            <%
+                                LabelDAO labelDAO = new LabelDAO();
+                                List<LabelSystem> level1 = labelDAO.getAllCrops();
 
-<%
-        ExpertDAO expDAO = new ExpertDAO();
-        List<Expert> exps = expDAO.getExperts();
+                                out.print("<option value=\"0\">无</option>");
+                                if (level1 != null && !level1.isEmpty()) {
+                                    for (LabelSystem label1 : level1) {
+                                        out.print("<option value=\"");
+                                        out.print(label1.getLabelId());
+                                        out.print("\">");
+                                        out.print(label1.getName());
+                                        out.print("</option>");
+                                    }
+                                }
+                            %>
+                        </select>
+                    </td>
+                    <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">指定专家：</th>
+                    <td>
+                        <select id="labelId" name="labelId">
 
-        out.print("<option value=\"0\">无</option>");
-        if(exps!=null && !exps.isEmpty())
-        for (Expert exp : exps) {
-            out.print("<option value=\"");
-            out.print(exp.getEptId());
-            out.print("\">");
-            out.print(exp.getEptName());
-            out.print("</option>");
-        }
-%>
-</select>                   
-                    
-                </td>
-            </tr>
-            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">提问：</th>
-                <td colspan="3"><textarea name="ehmUserQuestion" cols="80" rows="2" style="width:500px;height:80px;"></textarea>
-                </td></tr>
-            <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">姓名：</th>
-                <td colspan="3"><input type="text" name="ehmUserName" value="" />
-                </td></tr>
-            <tr><th></th>
-                <td colspan="3"><input onclick="return checkInputValue();" type="submit" class="submit" name="button" value="提交问题" style="width:80px;height: 23px;"/>
-                </td></tr>
-            <tr><td colspan="3">
-                </td></tr>
-        </table>
-    </form>
-        </div>
+                            <%
+                                ExpertDAO expDAO = new ExpertDAO();
+                                List<Expert> exps = expDAO.getExperts();
 
-  <div style="padding: 5px">
-    <table class="theform">
-        <tr>
-            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:100px;">提问者</th>
-            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:230px;">用户提问</th>
-            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;">专家解答</th>
-            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:100px;">日期</th>
-            <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;">详细</th></tr>
+                                out.print("<option value=\"0\">无</option>");
+                                if (exps != null && !exps.isEmpty()) {
+                                    for (Expert exp : exps) {
+                                        out.print("<option value=\"");
+                                        out.print(exp.getEptId());
+                                        out.print("\">");
+                                        out.print(exp.getEptName());
+                                        out.print("</option>");
+                                    }
+                                }
+                            %>
+                        </select>                   
 
-        <%
-            request.setCharacterEncoding("UTF-8");
-            ExpertHelpMessageDAO expertHelpMessageDAO = new ExpertHelpMessageDAO();
-            List<ExpertHelpMessage> messages = expertHelpMessageDAO.getEnabledExpertHelpMessages();
+                    </td>
+                </tr>
+                <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">提问：</th>
+                    <td colspan="3"><textarea name="ehmUserQuestion" cols="80" rows="2" style="width:500px;height:80px;"></textarea>
+                    </td></tr>
+                <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">姓名：</th>
+                    <td colspan="3"><input type="text" name="ehmUserName" value="" />
+                    </td></tr>
+                <tr><th></th>
+                    <td colspan="3"><input onclick="return checkInputValue();" type="submit" class="submit" name="button" value="提交问题" style="width:80px;height: 23px;"/>
+                    </td></tr>
+                <tr><td colspan="3">
+                    </td></tr>
+            </table>
+        </form>
+    </div>
 
-            if (messages == null || messages.isEmpty()) {
-                out.print("<tr><td colspan=4 align='center'>系统中暂时没有数据，请插入数据！</td></tr>");
-            } else {
-                for (ExpertHelpMessage message : messages) {
-                    int srtLen = 13;
-                    String userQuestion = message.getEhmUserQuestion();
-                    String expertAnswer = message.getEhmExpertAnswer();
-                    if(userQuestion==null)
-                        userQuestion = "无";
-                    if(expertAnswer==null)
-                        expertAnswer = "无";
-                    if(userQuestion.length()>srtLen)
-                        userQuestion = userQuestion.substring(0, srtLen) + "...";
-                    if(expertAnswer.length()>srtLen)
-                        expertAnswer = expertAnswer.substring(0, srtLen) + "...";
-                    out.print("<tr><td style=\"text-align: left;color: black;\">");
-                    out.print(message.getEhmUserName());
-                    out.print("</td><td style=\"text-align: left;color: black;\">");
-                    out.print(userQuestion);
-                    out.print("</td><td style=\"text-align: left;color: black;\">");
-                    out.print(expertAnswer);
-                    out.print("</td><td style=\"text-align: left;color: black;\">");
-                    out.print(message.getEhmDate());
-                    out.print("</td><td style=\"text-align: left;color: black;\"><a href='");
-                    out.print(request.getContextPath());
-                    out.print("/functionPage/answerDetail.jsp?ehmId=");
-                    out.print(message.getEhmId());
-                    out.print("'>详细");
-                    out.print("</a></td></tr>");
+    <div style="padding: 5px">
+        <table class="theform">
+            <tr>
+                <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:100px;">提问者</th>
+                <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:230px;">用户提问</th>
+                <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;">专家解答</th>
+                <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:100px;">日期</th>
+                <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;">详细</th></tr>
+
+            <%
+                request.setCharacterEncoding("UTF-8");
+                int pageSize = 15;
+                int pageNum = 1, firstPage = 1, endPage = 1, upPage = 1, downPage = 1;
+                String pageStr = request.getParameter("page");
+                if (pageStr != null && !pageStr.isEmpty()) {
+                    pageNum = Integer.parseInt(pageStr);
                 }
-            }
-        %>
+                ExpertHelpMessageDAO expertHelpMessageDAO = new ExpertHelpMessageDAO();
+                int msgSize = expertHelpMessageDAO.getTotal();
+                int unAudit = expertHelpMessageDAO.getUnAuditNum();
+                endPage = msgSize % pageSize == 0 ? msgSize / pageSize : msgSize / pageSize + 1;
+                if (pageNum == 1) {
+                    upPage = 1;
+                } else {
+                    upPage = pageNum - 1;
+                }
+                if (pageNum == endPage) {
+                    downPage = 1;
+                } else {
+                    downPage = pageNum + 1;
+                }
+                int startRecord = (pageNum - 1) * pageSize;
+                int endRecord = (pageNum) * pageSize;
+                List<ExpertHelpMessage> messages = expertHelpMessageDAO.getEnabledExpertHelpMessages(startRecord, endRecord);
 
-    </table>
-   </div>
+                if (messages == null || messages.isEmpty()) {
+                    out.print("<tr><td colspan=4 align='center'>系统中暂时没有数据，请插入数据！</td></tr>");
+                } else {
+                    for (ExpertHelpMessage message : messages) {
+                        int srtLen = 13;
+                        String userQuestion = message.getEhmUserQuestion();
+                        String expertAnswer = message.getEhmExpertAnswer();
+                        if (userQuestion == null) {
+                            userQuestion = "无";
+                        }
+                        if (expertAnswer == null) {
+                            expertAnswer = "无";
+                        }
+                        if (userQuestion.length() > srtLen) {
+                            userQuestion = userQuestion.substring(0, srtLen) + "...";
+                        }
+                        if (expertAnswer.length() > srtLen) {
+                            expertAnswer = expertAnswer.substring(0, srtLen) + "...";
+                        }
+                        out.print("<tr><td style=\"text-align: left;color: black;\">");
+                        out.print(message.getEhmUserName());
+                        out.print("</td><td style=\"text-align: left;color: black;\">");
+                        out.print(userQuestion);
+                        out.print("</td><td style=\"text-align: left;color: black;\">");
+                        out.print(expertAnswer);
+                        out.print("</td><td style=\"text-align: left;color: black;\">");
+                        out.print(message.getEhmDate());
+                        out.print("</td><td style=\"text-align: left;color: black;\"><a href='");
+                        out.print(request.getContextPath());
+                        out.print("/functionPage/answerDetail.jsp?ehmId=");
+                        out.print(message.getEhmId());
+                        out.print("'>详细");
+                        out.print("</a></td></tr>");
+                    }
+                }
+            %>
+            <tr><td colspan="5" style="text-align: right;">
+                    <span style="margin-right: 30px;">共<%=msgSize - unAudit%>个提问,<%=pageNum%>页/<%=endPage%>页</span>
+                    <span style="margin-right: 30px;cursor:pointer;"><a href="${pageContext.request.contextPath}/functionPage/expertHelp.jsp?page=<%=firstPage%>">第一页</a></span>
+                    <span style="margin-right: 30px;cursor:pointer;"><a href="${pageContext.request.contextPath}/functionPage/expertHelp.jsp?page=<%=upPage%>" >上一页</a></span>
+                    <span style="margin-right: 30px;cursor:pointer;"><a href="${pageContext.request.contextPath}/functionPage/expertHelp.jsp?page=<%=downPage%>">下一页</a></span>
+                    <span style="margin-right: 30px;cursor:pointer;"><a href="${pageContext.request.contextPath}/functionPage/expertHelp.jsp?page=<%=endPage%>">最后一页</a></span>
+                </td></tr>
+
+        </table>
+    </div>
 </div>
-                     
+
 <script type="text/javascript" >
     /**
      * check some input box is null ehmUserName
@@ -127,15 +161,15 @@
     function checkInputValue() {
         var ehmUserQuestion = document.getElementsByName("ehmUserQuestion")[0].value;
         var ehmUserName = document.getElementsByName("ehmUserName")[0].value;
-        if(ehmUserQuestion==null || ehmUserQuestion==""){
+        if (ehmUserQuestion == null || ehmUserQuestion == "") {
             alert("问题不能为空！");
             return false;
         }
-        if(ehmUserName==null || ehmUserName==""){
+        if (ehmUserName == null || ehmUserName == "") {
             alert("姓名不能为空！");
             return false;
         }
-        if(ehmUserQuestion.length>500){
+        if (ehmUserQuestion.length > 500) {
             alert("提问内容不能超过500！");
             return false;
         }

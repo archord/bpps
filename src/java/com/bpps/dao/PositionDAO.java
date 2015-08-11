@@ -26,7 +26,7 @@ public class PositionDAO {
 
         try {
             List<Integer> objs = new ArrayList<Integer>();
-            String sql = "select pos_id from position where label_id = "+ labelId;
+            String sql = "select pos_id from position where label_id = " + labelId;
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             while (rs.next()) {
@@ -41,12 +41,14 @@ public class PositionDAO {
         }
     }
 
-    public List<Position> getPositions(int labelId) {
-        log.debug("get All Position");
+    public List<Position> getPositionsByDisId(int disId) {
+        log.debug("get Positions by disid");
 
         try {
             List<Position> objs = new ArrayList<Position>();
-            String sql = "select * from position where label_id = "+ labelId +" order by pos_id";
+            String sql = "select p.* "
+                    + "from position p "
+                    + "inner join position_disease pd on p.pos_id=pd.pos_id and pd.pos_dis_flag=1 and pd.dis_id="+disId;
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             while (rs.next()) {
@@ -66,12 +68,37 @@ public class PositionDAO {
         }
     }
 
-    public Position getPositionById(int id){
+    public List<Position> getPositions(int labelId) {
+        log.debug("get All Position");
+
+        try {
+            List<Position> objs = new ArrayList<Position>();
+            String sql = "select * from position where label_id = " + labelId + " order by pos_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                Position obj = new Position();
+                obj.setPosId(rs.getInt("pos_id"));
+                obj.setPosName(rs.getString("pos_name"));
+                obj.setPosDescribe(rs.getString("pos_describe"));
+                obj.setPosImagePath(rs.getString("pos_image_path"));
+                obj.setLabelId(rs.getInt("label_id"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public Position getPositionById(int id) {
         log.debug("get Position by ID");
 
         try {
             Position obj = new Position();
-            String sql = "select * from position where pos_id = "+id;
+            String sql = "select * from position where pos_id = " + id;
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             if (rs.next()) {
@@ -97,13 +124,13 @@ public class PositionDAO {
         Object[] objs = {obj.getPosName(), obj.getPosDescribe(), obj.getPosImagePath(), obj.getLabelId()};
         dbm.doExecute(sql, objs);
         dbm.close();
-        
+
         int maxId = getMaxPosId();
         PosDisDAO posdisDAO = new PosDisDAO();
         posdisDAO.addPosDisByPosId(maxId, obj.getLabelId());
     }
 
-    public void updatePosition(Position obj){
+    public void updatePosition(Position obj) {
         log.debug("add Position");
 
         String sql = "update position set pos_name = ?, pos_describe = ?, pos_image_path=? where pos_id = ?";
@@ -113,10 +140,10 @@ public class PositionDAO {
         dbm.close();
     }
 
-    public void deletePosition(int id){
+    public void deletePosition(int id) {
         log.debug("add Position");
 
-        String sql = "delete from position where pos_id = "+id;
+        String sql = "delete from position where pos_id = " + id;
         DatabaseManager dbm = new DatabaseManager();
         dbm.doExecute(sql);
         dbm.close();
@@ -125,8 +152,7 @@ public class PositionDAO {
         posdisDAO.deletePosDisByPosId(id);
     }
 
-
-    public int getMaxPosId(){
+    public int getMaxPosId() {
         log.debug("get max Posid");
 
         try {
@@ -144,13 +170,14 @@ public class PositionDAO {
             return 0;
         }
     }
-    public int getTotalByLabelId(int labelId){
+
+    public int getTotalByLabelId(int labelId) {
 
         log.debug("get total position");
 
         try {
             int disId = 0;
-            String sql = "select count(*) from position where label_id="+labelId;
+            String sql = "select count(*) from position where label_id=" + labelId;
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             if (rs.next()) {

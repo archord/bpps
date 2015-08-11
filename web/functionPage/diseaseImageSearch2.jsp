@@ -14,7 +14,6 @@
     request.setCharacterEncoding("UTF-8");
     String labelIdStr = request.getParameter("labelId");
     String disType = request.getParameter("disType");
-    String posId = request.getParameter("posId");
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -48,10 +47,10 @@
             </div>
             <div id="article_content" style="text-align: center;">
                 <%
-                    if(labelIdStr!=null&&disType!=null&&posId!=null&&!labelIdStr.isEmpty()&&!disType.isEmpty()&&!posId.isEmpty()){
+                    if(labelIdStr!=null&&disType!=null&&!labelIdStr.isEmpty()&&!disType.isEmpty()){
                     String urlPath = request.getContextPath();
                     DiseaseDAO disDAO = new DiseaseDAO();
-                    List<Disease> diseases = disDAO.getDiseases(labelIdStr, disType, posId);
+                    List<Disease> diseases = disDAO.getDiseases(labelIdStr, disType);
 
                     out.println("<table style=\"clear:both;width:100%\">");
                     if (diseases != null && !diseases.isEmpty()) {

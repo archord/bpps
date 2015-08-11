@@ -25,6 +25,8 @@ public class UserInfoAction extends DispatchAction {
     private static final String LOGINSUCCESS = "loginsuccess";
     private static final String LOGINERROR = "loginerror";
     private final static String LIST = "list";
+    private final static String UPDATE = "update";
+    private final static String ERROR = "error";
     
     public ActionForward addAction(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
@@ -69,6 +71,33 @@ public class UserInfoAction extends DispatchAction {
             request.setAttribute("loginerror", 2);
         }
         return mapping.findForward(flag);
+    }
+
+    public ActionForward updateAction(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        String forward = UPDATE;
+        String strId = request.getParameter("userId");
+        if (!strId.isEmpty()) {
+            Integer userId = Integer.parseInt(strId);
+            UserInfoDAO dao = new UserInfoDAO();
+            UserInfo article = dao.getUserById(strId);
+            request.setAttribute("detail", article);
+        } else {
+            forward = LIST;
+        }
+
+        return mapping.findForward(forward);
+    }
+
+    public ActionForward doUpdateAction(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        UserInfo obj = (UserInfo) form;
+
+        UserInfoDAO dao = new UserInfoDAO();
+        dao.updateUserInfo(obj);
+        return mapping.findForward(LIST);
     }
 
     public ActionForward deleteAction(ActionMapping mapping, ActionForm  form,

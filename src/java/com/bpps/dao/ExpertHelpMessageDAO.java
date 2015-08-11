@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
  * @author xy
  */
 public class ExpertHelpMessageDAO {
-    
+
     private static final Log log = LogFactory.getLog(ExpertHelpMessageDAO.class);
 
     public List<ExpertHelpMessage> getExpertHelpMessages() {
@@ -58,6 +58,80 @@ public class ExpertHelpMessageDAO {
         }
     }
 
+    public List<ExpertHelpMessage> getExpertHelpMessages(int startRecord, int endRecord) {
+        log.debug("get some ExpertHelpMessage");
+
+        try {
+            List<ExpertHelpMessage> objs = new ArrayList<ExpertHelpMessage>();
+//            String sql = "SELECT * FROM expert_help_message order by ehm_id, ept_enable";
+            String sql = "select * from "
+                    + "("
+                    + "select A.*, ROWNUM RN "
+                    + "from (SELECT * FROM expert_help_message order by ept_enable) A "
+                    + "where ROWNUM <= " + endRecord
+                    + ")"
+                    + "where RN > "+startRecord;
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            CLOB clob = null;
+            while (rs.next()) {
+                ExpertHelpMessage obj = new ExpertHelpMessage();
+                obj.setEhmDate(rs.getDate("ehm_date"));
+                obj.setEhmId(rs.getLong("ehm_id"));
+                clob = (oracle.sql.CLOB) rs.getClob("ehm_expert_answer");
+                obj.setEhmExpertAnswer(MyTools.ClobToString(clob));
+                clob = (oracle.sql.CLOB) rs.getClob("ehm_user_question");
+                obj.setEhmUserQuestion(MyTools.ClobToString(clob));
+                obj.setEptEnable(rs.getShort("ept_enable"));
+                obj.setUserId(rs.getLong("user_id"));
+                obj.setEhmUserName(rs.getString("ehm_user_name"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    public List<ExpertHelpMessage> getEnabledExpertHelpMessages(int startRecord, int endRecord) {
+        log.debug("get Enabled ExpertHelpMessage");
+
+        try {
+            List<ExpertHelpMessage> objs = new ArrayList<ExpertHelpMessage>();
+            //String sql = "SELECT * FROM expert_help_message where ept_enable = 1 order by ehm_id";
+            String sql = "select * from "
+                    + "("
+                    + "select A.*, ROWNUM RN "
+                    + "from (SELECT * FROM expert_help_message where ept_enable = 1 order by ehm_date desc) A "
+                    + "where ROWNUM <= " + endRecord
+                    + ")"
+                    + "where RN > "+startRecord;
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            CLOB clob = null;
+            while (rs.next()) {
+                ExpertHelpMessage obj = new ExpertHelpMessage();
+                obj.setEhmDate(rs.getDate("ehm_date"));
+                obj.setEhmId(rs.getLong("ehm_id"));
+                clob = (oracle.sql.CLOB) rs.getClob("ehm_expert_answer");
+                obj.setEhmExpertAnswer(MyTools.ClobToString(clob));
+                clob = (oracle.sql.CLOB) rs.getClob("ehm_user_question");
+                obj.setEhmUserQuestion(MyTools.ClobToString(clob));
+                obj.setEptEnable(rs.getShort("ept_enable"));
+                obj.setUserId(rs.getLong("user_id"));
+                obj.setEhmUserName(rs.getString("ehm_user_name"));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
     public List<ExpertHelpMessage> getEnabledExpertHelpMessages() {
         log.debug("get All ExpertHelpMessage");
 
@@ -87,7 +161,7 @@ public class ExpertHelpMessageDAO {
             return null;
         }
     }
-    
+
     public ExpertHelpMessage getExpertHelpMessageById(int id) {
         log.debug("get ExpertHelpMessage by ID");
 
@@ -116,7 +190,6 @@ public class ExpertHelpMessageDAO {
             return null;
         }
     }
-
 
     public void addExpertHelpMessage(ExpertHelpMessage obj) {
         log.debug("add ExpertHelpMessage");
@@ -165,7 +238,7 @@ public class ExpertHelpMessageDAO {
 
         try {
             String sql = "update expert_help_message set ept_enable = ? where ehm_id = ?";
-             
+
             Connection con = ConnectionFactory.getConnection();
             boolean defaultCommit = con.getAutoCommit();
             con.setAutoCommit(false);
@@ -238,11 +311,31 @@ public class ExpertHelpMessageDAO {
 
     public int getTotal() {
 
-        log.debug("get total article");
+        log.debug("get total expert answer");
 
         try {
             int disId = 0;
-            String sql = "select count(*) from ehm_expert_answer";
+            String sql = "select count(*) from expert_help_message";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            if (rs.next()) {
+                disId = rs.getInt(1);
+            }
+            dbm.close();
+            return disId;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int getUnAuditNum() {
+
+        log.debug("get Un Audit Num");
+
+        try {
+            int disId = 0;
+            String sql = "select count(*) from expert_help_message where ept_enable=0";
             DatabaseManager dbm = new DatabaseManager();
             ResultSet rs = dbm.doSelect(sql);
             if (rs.next()) {

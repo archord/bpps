@@ -71,6 +71,7 @@
         <action parameter="method" input="/index.jsp" name="UserForm" path="/userInfoAction" scope="request" type="com.bpps.struts.UserInfoAction" validate="false">
             <forward name="loginerror" path="/index.jsp"/>
             <forward name="loginsuccess" path="/manage/manage.jsp"/>
+            <forward name="update" path="/manage/pages/userInfo/userUpdate.jsp"/>
             <forward name="list" path="/userInfoAction.do?method=listAction"/>
             <forward name="success" path="/manage/pages/userInfo/userList.jsp"/>
         </action>

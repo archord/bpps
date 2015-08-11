@@ -1,17 +1,15 @@
-<%--
-    Document   : SymptomAdd
+<%-- 
+    Document   : diseaseAdd
     Created on : 2012-5-19, 15:19:52
     Author     : Administrator
 --%>
 
-<%@page import="com.bpps.pojo.UserInfo"%>
-<%@page import="com.bpps.dao.UserInfoDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.util.List" %>
+<%@page import="com.bpps.pojo.UserInfo" %>
 
 <%
 request.setCharacterEncoding("UTF-8");
-
+UserInfo user = (UserInfo)request.getAttribute("detail");
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -20,7 +18,7 @@ request.setCharacterEncoding("UTF-8");
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>用户信息列表页面</title>
+        <title>用户信息跟新页面</title>
         <!--link href="${pageContext.request.contextPath}/ui/layout.css" rel="stylesheet" type="text/css"/-->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/themes/default/default.css" />
         <link href="${pageContext.request.contextPath}/ui/skin_1/css/common.css" rel="stylesheet" type="text/css">
@@ -34,17 +32,24 @@ request.setCharacterEncoding("UTF-8");
      <table cellpadding="0" cellspacing="0" id="main-mypos">
       <tr>
         <td width="3" height="21" align="left"><img src="${pageContext.request.contextPath}/ui/skin_1/images/nav-left.gif" width="4" height="27"></td>
-        <th align="left">您的位置：用户管理 > 用户信息列表</th>
+        <th align="left">您的位置：用户管理 > 增加用户修改</th>
         <td width="3" align="right"><img src="${pageContext.request.contextPath}/ui/skin_1/images/rht-left.gif" ></td>
       </tr>
     </table>
+        <div id="page">
+            <div id="formContent">
+
+            </div>
+            <div>
+            </div>
+        </div>
 
  <table border="0" cellspacing="0" cellpadding="0" class="pannel-1" >
   <!-- Pannel title -->
   <thead>
     <tr>
       <td class="pannel-head-left">&nbsp;</td>
-      <th class="pannel-head-mid">用户信息列表</th>
+      <th class="pannel-head-mid">修改用户信息</th>
       <td class="pannel-head-right"></td>
     </tr>
   </thead>
@@ -56,48 +61,41 @@ request.setCharacterEncoding("UTF-8");
     <tr>
       <td  colspan="3" valign="top" ><!-- form(input) 默认不显示，去掉display 样式后显示-->
         <fieldset>
-        <legend>用户列表</legend>
-
-                <table  class="theform">
-                    <tr><th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">用户名</th>
-                        <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;">密码</th>
-                        <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;" width="50px">修改</th>
-                        <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;background-color: #D1D7DC;" width="50px">删除</th></tr>
-
-<%
-        UserInfoDAO userDAO = new UserInfoDAO();
-        List<UserInfo> users = null;
-        users = userDAO.getAllUsers();
-
-        if(users==null || users.isEmpty()){
-            out.print("<tr><td colspan=3 align='center'>系统中暂时没有数据，请插入数据！</td></tr>");
-        }else
-        for (UserInfo user : users) {
-            out.print("<tr><td>");
-            out.print(user.getUserName());
-            out.print("</td><td>");
-            out.print(user.getPassword());
-            /**/out.print("</td><td><a href='");
-            out.print(request.getContextPath());
-            out.print("/userInfoAction.do?method=updateAction&userId=");
-            out.print(user.getUserId());
-            out.print("'>修改</a>");
-            out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
-            out.print(request.getContextPath());
-            out.print("/userInfoAction.do?method=deleteAction&userId=");
-            out.print(user.getUserId());
-            out.print("'>删除</a>");
-            out.print("</td><td>");
-        }
-%>
-
+        <legend>修改用户</legend>
+            <form name="userUpdate" method="post" action="${pageContext.request.contextPath}/userInfoAction.do?method=doUpdateAction">
+                <table  class="theform" >
+                <tr><th>用户名：</th>
+                    <input type="hidden" name="userId" value="<%=user.getUserId()%>" />
+                    <td><input type="text" name="userName" value="<%=user.getUserName()%>" /></td></tr>
+                <tr><th>密码：</th>
+                    <td><input type="password" name="password" value="<%=user.getPassword()%>" /></td></tr>
+                <tr><td colspan="2"><input type="button" class="bt" name="button" value="修改用户"  onclick="checkInputValue();"/> </td></tr>
                 </table>
+            </form>
         </fieldset>
 
 
        </td>
     </tr>
+       <script type="text/javascript" >
 
+                    /**
+                     * check some input box is null
+                     */
+                    function checkInputValue() {
+                        var disName = document.getElementsByName("userName")[0].value;
+                        if(disName==null || disName==""){
+                            alert("用户名不能为空");
+                            return;
+                        }
+                        var password = document.getElementsByName("password")[0].value;
+                        if(password==null || password==""){
+                            alert("密码不能为空");
+                            return;
+                        }
+                        document.getElementsByName("userUpdate")[0].submit();
+                    }
+	</script>
 
   </tbody>
   <!-- /Pannel contents -->

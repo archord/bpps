@@ -68,10 +68,30 @@
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;background-color: #D1D7DC;">回答</th>
                                     <th style="text-align: left;font-size: 16px; color: black;font-weight: bold;width:80px;background-color: #D1D7DC;">删除</th></tr>
 
-                                <%
-                                    request.setCharacterEncoding("UTF-8");
+                                <%                                    request.setCharacterEncoding("UTF-8");
+                                    int pageSize = 15;
+                                    int pageNum = 1, firstPage = 1, endPage = 1, upPage = 1, downPage = 1;
+                                    String pageStr = request.getParameter("page");
+                                    if (pageStr != null && !pageStr.isEmpty()) {
+                                        pageNum = Integer.parseInt(pageStr);
+                                    }
                                     ExpertHelpMessageDAO expertHelpMessageDAO = new ExpertHelpMessageDAO();
-                                    List<ExpertHelpMessage> messages = expertHelpMessageDAO.getExpertHelpMessages();
+                                    int msgSize = expertHelpMessageDAO.getTotal();
+                                    int unAudit = expertHelpMessageDAO.getUnAuditNum();
+                                    endPage = msgSize%pageSize==0?msgSize/pageSize:msgSize/pageSize+1;
+                                    if(pageNum==1){
+                                        upPage = 1;
+                                    }else{
+                                        upPage=pageNum-1;
+                                    }
+                                    if(pageNum==endPage){
+                                        downPage = 1;
+                                    }else{
+                                        downPage=pageNum+1;
+                                    }
+                                    int startRecord = (pageNum-1)*pageSize;
+                                    int endRecord = (pageNum)*pageSize;
+                                    List<ExpertHelpMessage> messages = expertHelpMessageDAO.getExpertHelpMessages(startRecord, endRecord);
 
                                     if (messages == null || messages.isEmpty()) {
                                         out.print("<tr><td colspan=5 align='center'>系统中暂时没有数据，请插入数据！</td></tr>");
@@ -104,7 +124,7 @@
                                                 out.print("通过");
                                             } else if (isEnable == 2) {
                                                 out.print("不通过");
-                                            }else {
+                                            } else {
                                                 out.print("未审核");
                                             }
                                             out.print("</td><td><a href='");
@@ -116,7 +136,7 @@
                                                 out.print("修改");
                                             } else if (isEnable == 2) {
                                                 out.print("修改");
-                                            }else {
+                                            } else {
                                                 out.print("审核");
                                             }
                                             out.print("</td><td><a onclick=\"return confirm('是否删除?');\" href='");
@@ -128,6 +148,14 @@
                                         }
                                     }
                                 %>
+                                <tr><td colspan="6" style="text-align: right;">
+                                        <span style="margin-right: 30px;cursor:pointer;">共<%=msgSize%>个提问<%=unAudit%>个未审核</span>
+                                        <span style="margin-right: 30px;cursor:pointer;"><%=pageNum%>页/<%=endPage%>页</span>
+                                        <span style="margin-right: 30px;cursor:pointer;"><a href="${pageContext.request.contextPath}/manage/pages/expertHelpMessage/expertHelpMessageList.jsp?page=<%=firstPage%>" target="mainFrame">第一页</a></span>
+                                        <span style="margin-right: 30px;cursor:pointer;"><a href="${pageContext.request.contextPath}/manage/pages/expertHelpMessage/expertHelpMessageList.jsp?page=<%=upPage%>" target="mainFrame">上一页</a></span>
+                                        <span style="margin-right: 30px;cursor:pointer;"><a href="${pageContext.request.contextPath}/manage/pages/expertHelpMessage/expertHelpMessageList.jsp?page=<%=downPage%>" target="mainFrame">下一页</a></span>
+                                        <span style="margin-right: 30px;cursor:pointer;"><a href="${pageContext.request.contextPath}/manage/pages/expertHelpMessage/expertHelpMessageList.jsp?page=<%=endPage%>" target="mainFrame">最后一页</a></span>
+                                    </td></tr>
 
                             </table>
                         </fieldset>

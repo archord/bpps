@@ -11,6 +11,7 @@
 %>
 
 <div id="mainCenter">
+  <div style="padding: 5px">
 <%
     if(article!=null){
         out.print(article.getArticleContent());
@@ -18,4 +19,5 @@
         out.print("请录入系统介绍内容！");
     }
 %>
+</div>
 </div>
