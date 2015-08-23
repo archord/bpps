@@ -1,0 +1,65 @@
+
+<%@page pageEncoding="UTF-8"%>
+
+<%@page import="java.util.List" %>
+<%@page import="com.bpps.pojo.Disease" %>
+<%@page import="com.bpps.dao.DiseaseDAO" %>
+<%@page import="com.bpps.pojo.Position"%>
+<%@page import="com.bpps.dao.PositionDAO"%>
+
+<%
+request.setCharacterEncoding("UTF-8");
+String labelId = request.getParameter("labelId");
+%>
+
+<div id="mainCenter">
+<%
+
+            int labelIdInt = Integer.parseInt(labelId);
+            PositionDAO positionDAO= new PositionDAO();
+            List<Position> positions = positionDAO.getPositions(labelIdInt);
+            DiseaseDAO diseaseDAO = new DiseaseDAO();
+
+            for (Position position : positions){
+                List<Disease> diseases = diseaseDAO.getDiseasesByPosIdForImageShow(position.getPosId());
+                if(diseases==null || diseases.size()==0)
+                    continue;
+                out.println("<table>");
+                int colNum = 3;
+                int rowNum = (diseases.size()%colNum==0)?(diseases.size()/colNum) : (diseases.size()/colNum+1);
+                if(colNum>diseases.size())
+                    colNum=diseases.size();
+                out.println("<tr><td colspan="+colNum+"><span style=\"font-size:26px;font-weight: bold;\">"+position.getPosName()+"病害展示</span></td></tr>");
+                for(int row=0; row<rowNum; row++){
+                    String trImg = "<tr>";
+                    String trName = "<tr>";
+                    for(int col=0; col<colNum; col++){
+                        int index = row*colNum+col;
+                        if(index<diseases.size()){
+                            trImg += "<td>";
+                            trImg += "<span class=img><a target=\"blank:\" href=\""+ request.getContextPath() +"/diseaseAction.do?method=detailAction&disId="+ diseases.get(index).getDisId() +"\"> ";
+                            trImg += "<img src=\""+ diseases.get(index).getDisImagePath() +"\" alt=\""+ diseases.get(index).getDisName() +"\"/></a></span> ";
+                            trImg += "</td>";
+                            trName += "<td>";
+                            trName += "<span class=imgName><a target=\"blank:\" href=\""+ request.getContextPath() +"/diseaseAction.do?method=detailAction&disId="+ diseases.get(index).getDisId() +"\">";
+                            trName += diseases.get(index).getDisName();
+                            trName += "</a></span>";
+                            trName += "</td>";
+                        }else{
+                            trImg += "<td>";
+                            trImg += "</td>";
+                            trName += "<td>";
+                            trName += "</td>";
+                        }
+                    }
+                    trImg += "</tr>";
+                    trName += "</tr>";
+                    out.println(trImg);
+                    out.println(trName);
+                }
+                out.println("</table>");
+            }
+%>
+<div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
+
+</div>

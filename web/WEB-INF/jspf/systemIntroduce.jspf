@@ -1,0 +1,19 @@
+<%@page import="com.bpps.pojo.Article"%>
+<%@page import="com.bpps.dao.ArticleDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+    String articleId = request.getParameter("articleId");
+    int articleIdInt = Integer.parseInt(articleId);
+
+    ArticleDAO articleDAO = new ArticleDAO();
+    Article article = articleDAO.getArticleById(articleIdInt);
+%>
+
+<div id="mainCenter">
+  
+  <div style="padding: 5px">
+    <%=article.getArticleContent()%>
+  </div>
+</div>

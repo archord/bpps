@@ -1,0 +1,25 @@
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.pojo.Disease"%>
+<%@page import="com.bpps.dao.DiseaseDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+    String disId = request.getParameter("disId");
+%>
+
+<div id="mainCenter">
+
+    <%
+        int disIdInt = Integer.parseInt(disId);
+        DiseaseDAO diseaseDAO = new DiseaseDAO();
+        Disease disease = diseaseDAO.getDiseaseById(disIdInt);
+    %>
+
+    <div id="article_header" style="text-align: center;font-size: 16px; color: black;font-weight: bold;">
+        <%=disease.getDisName()%>（<%=disease.getDisNameEn()%>）
+    </div>
+    <div id="article_content">
+        <%=disease.getDisContent()%>
+    </div>
+</div>

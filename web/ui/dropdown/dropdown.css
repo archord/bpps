@@ -1,0 +1,20 @@
+
+ol,ul {list-style:none}
+blockquote:before,blockquote:after,q:before,q:after {content:""}
+blockquote,q {quotes:"" ""}
+option,select {min-width:1.5em}
+ins {text-decoration:none}
+del {text-decoration:line-through}
+img,a img {border:0}
+
+.content {width:720px;margin:0 auto;overflow:hidden;background:#fff;border:1px solid #ccc;padding-bottom:300px}
+.stack > a {background:url(/bpps/ui/dropdown/arrow.png) right 9px no-repeat;position:relative;}
+.toprow > ul {margin-top:30px;}
+
+div#dropdown li {background:#A5DEEF;position:relative;float:left;display:block;}
+div#dropdown li li {display:none;}
+div#dropdown li ul {position:absolute;display:block;top:0;width:0;left:0;margin-left:0;height:0;}
+div#dropdown a {background:transparent;line-height:28px;text-indent:10px;font-size:14px;color:#332BF3 !important;text-decoration:none;font-weight:bold;display:block;height:auto;width:auto;border-top:1px solid #33fc38;border-left:1px solid #33fc38;border-right:1px solid #4ffaec;border-bottom:1px solid #4ffaec;height:28px;width:auto;}
+div#dropdown a:hover {border-top:1px solid #4ffaec;border-left:1px solid #4ffaec;border-right:1px solid #33fc38;border-bottom:1px solid #33fc38;background: #54D8F1;}
+
+

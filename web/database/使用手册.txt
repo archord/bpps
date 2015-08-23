@@ -1,0 +1,7 @@
+1, 启动tomcat服务器
+	在命令行（cmd）中输入：net start tomcat6
+	
+2, 关闭tomcat服务器
+	在命令行（cmd）中输入：net stop tomcat6
+	
+3,在浏览器中输入访问地址: http://127.0.0.1:8080/hgbh, 如果在其他机器访问，应将127.0.0.1换成服务器的IP地址

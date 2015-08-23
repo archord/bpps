@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="ArticleForm" type="com.bpps.pojo.Article"/>
+        <form-bean name="LabelForm" type="com.bpps.pojo.LabelSystem"/>
+        <form-bean name="FunctionPageForm" type="com.bpps.pojo.FunctionPage"/>
+        <form-bean name="DiseaseForm" type="com.bpps.pojo.Disease"/>
+        <form-bean name="PositionForm" type="com.bpps.pojo.Position"/>
+        <form-bean name="SymptomForm" type="com.bpps.pojo.Symptom"/>
+        <form-bean name="SymDisForm" type="com.bpps.pojo.SymptomDisease"/>
+        <form-bean name="SymptomDiscribeForm" type="com.bpps.pojo.SymptomDiscribe"/>
+        <form-bean name="UserForm" type="com.bpps.pojo.UserInfo"/>
+        <form-bean name="PosDisForm" type="com.bpps.pojo.PositionDisease"/>
+        <form-bean name="SymptomImageForm" type="com.bpps.pojo.SymptomImage"/>
+        <form-bean name="ExpertHelpMessageForm" type="com.bpps.pojo.ExpertHelpMessage"/>
+        <form-bean name="ExpertForm" type="com.bpps.pojo.Expert"/>
+    
+    </form-beans>
+    
+    <global-exceptions>
+    
+    </global-exceptions>
+
+    <global-forwards>
+        <forward name="welcome"  path="/Welcome.do"/>
+        <forward name="error"  path="/error.jsp"/>
+    </global-forwards>
+
+    <action-mappings>
+        <action parameter="method" path="/diseaseAction" input="/manage/pages/disease/diseaseAdd.jsp" name="DiseaseForm"  type="com.bpps.struts.DiseaseAction" scope="request" validate="false">
+            <forward name="list" path="/diseaseAction.do?method=listAction"/>
+            <forward name="detail" path="/manage/pages/disease/diseaseDetail.jsp"/>
+            <forward name="update" path="/manage/pages/disease/diseaseUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/disease/diseaseList.jsp"/>
+            <forward name="symSearch" path="/manage/pages/position/positionDetail.jsp"/>
+            <forward name="searchResultList" path="/manage/pages/disease/searchResultList.jsp"/>
+            <forward name="error" path="/symSearch.jsp"/>
+        </action>
+        <!---->
+        <action parameter="method" path="/positionAction" input="/manage/pages/position/diseaseAdd.jsp" name="PositionForm"  type="com.bpps.struts.PositionAction" scope="request" validate="false">
+            <forward name="list" path="/positionAction.do?method=listAction"/>
+            <forward name="detail" path="/manage/pages/position/positionDetail.jsp"/>
+            <forward name="update" path="/manage/pages/position/positionUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/position/positionList.jsp"/>
+        </action>
+        <action parameter="method" path="/symptomAction" input="/manage/pages/symptom/symptomAdd.jsp" name="SymptomForm" type="com.bpps.struts.SymptomAction" scope="request" validate="false">
+            <forward name="list" path="/symptomAction.do?method=listAction"/>
+            <forward name="detail" path="/manage/pages/symptom/symptomDetail.jsp"/>
+            <forward name="update" path="/manage/pages/symptom/symptomUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/symptom/symptomList.jsp"/>
+        </action>
+        <action input="/manage/pages/position/posDiseaseImageAdd.jsp" name="PosDisForm" path="/posDisAction" scope="request" type="com.bpps.struts.PosDisAction" validate="false"  parameter="method">
+            <forward name="success" path="/manage/pages/position/posAssociateDisease.jsp"/>
+            <forward name="addImage" path="/manage/pages/position/posDiseaseImageAdd.jsp"/>
+        </action>
+        <action input="/" path="/symDisAction" scope="request" type="com.bpps.struts.SymDisAction" validate="false">
+            <forward name="success" path="/manage/pages/symptom/symAssociateDisease.jsp"/>
+        </action>
+        <action parameter="method" input="/manage/pages/symptom/symptomDiscribeAdd.jsp" name="SymptomDiscribeForm" path="/symptomDiscribeAction" scope="request" type="com.bpps.struts.SymptomDiscribeAction" validate="false">
+            <forward name="list" path="/symptomDiscribeAction.do?method=listAction"/>
+            <forward name="detail" path="/manage/pages/symptom/symptomDiscribeDetail.jsp"/>
+            <forward name="update" path="/manage/pages/symptom/symptomDiscribeUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/symptom/symptomDiscribeList.jsp"/>
+        </action>
+        <action parameter="method" input="/index.jsp" name="UserForm" path="/userInfoAction" scope="request" type="com.bpps.struts.UserInfoAction" validate="false">
+            <forward name="loginerror" path="/index.jsp"/>
+            <forward name="loginsuccess" path="/manage/manage.jsp"/>
+            <forward name="update" path="/manage/pages/userInfo/userUpdate.jsp"/>
+            <forward name="list" path="/userInfoAction.do?method=listAction"/>
+            <forward name="success" path="/manage/pages/userInfo/userList.jsp"/>
+        </action>
+        <action parameter="method" input="/manage/pages/label/labelAdd.jsp" name="LabelForm" path="/labelAction" scope="request" type="com.bpps.struts.LabelAction" validate="false">
+            <forward name="list" path="/labelAction.do?method=listAction"/>
+            <forward name="detail" path="/manage/pages/label/labelDetail.jsp"/>
+            <forward name="update" path="/manage/pages/label/labelUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/label/labelList.jsp"/>
+            <forward name="adjustMenuOrder" path="/manage/pages/label/adjustMenuOrder.jsp"/>
+        </action>
+        <action parameter="method" input="/manage/pages/functionPage/pageAdd.jsp" name="FunctionPageForm" path="/functionPageAction" scope="request" type="com.bpps.struts.FunctionPageAction" validate="false">
+            <forward name="list" path="/functionPageAction.do?method=listAction"/>
+            <forward name="detail" path="/manage/pages/functionPage/pageDetail.jsp"/>
+            <forward name="update" path="/manage/pages/functionPage/pageUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/functionPage/pageList.jsp"/>
+        </action>
+        <action parameter="method" input="/manage/pages/article/articleAdd.jsp" name="ArticleForm" path="/articleAction" scope="request" type="com.bpps.struts.ArticleAction" validate="false">
+            <forward name="list" path="/articleAction.do?method=listAction"/>
+            <forward name="detail" path="/manage/pages/article/articleDetail.jsp"/>
+            <forward name="update" path="/manage/pages/article/articleUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/article/articleList.jsp"/>
+        </action>
+        <action  parameter="method" input="/manage/pages/symptom/symptomImageAdd.jsp" name="SymptomImageForm" path="/symptomImageAction" scope="request" type="com.bpps.struts.SymptomImageAction" validate="false">
+            <forward name="list" path="/symptomImageAction.do?method=listAction"/>
+            <forward name="detail" path="/manage/pages/symptom/symptomImageDetail.jsp"/>
+            <forward name="update" path="/manage/pages/symptom/symptomImageUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/symptom/symptomImageList.jsp"/>        
+        </action>
+        <action parameter="method" input="/functionPage/expertHelp.jsp" name="ExpertHelpMessageForm" path="/expertHelpMessageAction" scope="request" type="com.bpps.struts.ExpertHelpMessageAction" validate="false">
+            <forward name="list1" path="/manage/pages/expertHelpMessage/expertHelpMessageList.jsp"/>
+            <forward name="list2" path="/functionPage/expertHelp.jsp"/>
+            <forward name="detail" path="/manage/pages/expertHelpMessage/expertHelpMessageDetail.jsp"/>
+            <forward name="update" path="/manage/pages/expertHelpMessage/expertHelpMessageUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/expertHelpMessage/expertHelpMessageList.jsp"/>        
+        </action>
+        <action parameter="method" input="/manage/pages/expert/expertAdd.jsp" name="ExpertForm" path="/expertAction" scope="request" type="com.bpps.struts.ExpertAction" validate="false">
+            <forward name="list" path="/manage/pages/expert/expertList.jsp"/>
+            <forward name="detail" path="/manage/pages/expert/expertDetail.jsp"/>
+            <forward name="update" path="/manage/pages/expert/expertUpdate.jsp"/>
+            <forward name="success" path="/manage/pages/expert/expertList.jsp"/>          
+        </action>
+        <action path="/fileUploadAction" type="com.bpps.struts.FileUploadAction"  name="PositionForm"/>
+        <action path="/Welcome" forward="/welcomeStruts.jsp"/>
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/bpps/struts/ApplicationResource"/>
+    
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>

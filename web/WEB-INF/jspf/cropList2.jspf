@@ -1,0 +1,43 @@
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.dao.LabelDAO"%>
+<%@page import="com.bpps.pojo.LabelSystem"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+    String labelId = request.getParameter("labelId");
+    int labelIdInt = Integer.parseInt(labelId);
+
+    LabelDAO labelDAO = new LabelDAO();
+    List<LabelSystem> labels = labelDAO.getLabelsByPId(labelIdInt);
+%>
+
+<div id="mainCenter">
+
+    <table  class="theform" id="detail">
+        <tr><th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">作物列表</th></tr>
+
+        <%
+            if (labels == null || labels.isEmpty()) {
+                out.print("<tr><td align='center'>系统中暂时没有数据，请插入数据！</td></tr>");
+            } else {
+                for (LabelSystem label : labels) {
+                    out.print("<tr><td>");
+                    if (label.getIsactive()==1) {
+                        out.print("<a href='");
+                        out.print(request.getContextPath());
+                        out.print("/functionPage/preventionList.jsp?labelId=");
+                        out.print(label.getLabelId());
+                        out.print("'>");
+                        out.print(label.getName());
+                        out.print("</a>");
+                    }else{
+                        out.print(label.getName());
+                    }
+                    out.print("</td></tr>");
+                }
+            }
+        %>
+
+    </table>
+</div>

@@ -1,0 +1,28 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="com.util.GenerateMenus"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.bpps.dao.ArticleDAO"%>
+<%@page import="com.bpps.dao.FunctionPageDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%@page import="java.util.List" %>
+<%@page import="com.bpps.pojo.LabelSystem"%>
+<%@page import="com.bpps.dao.LabelDAO"%>
+
+<div id="header" style="border: solid 1px gray;">
+    <div id="headerLogo">
+        <a href="${pageContext.request.contextPath}/index.jsp">
+            <img src="${pageContext.request.contextPath}/attached/image/sysimg/head.jpg"/></a>
+    </div>
+    <div id="headerNav">
+        <div id="dropdown">
+            <%@include file="/WEB-INF/jspf/head_static.jspf"%>
+<!--%
+        GenerateMenus gm = new GenerateMenus();
+        String menuStr = gm.generateMenus("JqueryMenu", 0);
+        out.print(menuStr);
+%-->
+
+        </div>  <!-- end of navmenu -->
+    </div>
+</div>
