@@ -32,7 +32,7 @@ public class DatabaseManager {
             rs = statement.executeQuery(sql);//执行sql语句
         } catch (SQLException e) {
             rs = null;
-            System.out.println("执行sql语句出错\nsql="+sql);
+            System.out.println("执行sql语句出错: sql="+sql);
             e.printStackTrace();
         }
         return rs;
@@ -49,7 +49,7 @@ public class DatabaseManager {
             statement = con.createStatement();    //获得静态状态集对象
             statement.execute(sql);
         } catch (SQLException e) {
-            System.out.println("执行sql语句出错");
+            System.out.println("执行sql语句出错: sql="+sql);
             e.printStackTrace();
         }
     }
@@ -141,6 +141,7 @@ public class DatabaseManager {
     protected void getConnection() {    //获得数据库连接
         if (con == null) {
             con = ConnectionFactory.getConnection();
+                System.out.print("open con");
         }
     }
 
@@ -154,6 +155,7 @@ public class DatabaseManager {
             }
             if (con != null) {
                 con.close();
+                System.out.println("\tclose con");
             }
         } catch (SQLException e) {
             e.printStackTrace();

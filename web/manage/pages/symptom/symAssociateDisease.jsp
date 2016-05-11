@@ -83,7 +83,8 @@ Position curPos = positionDAO.getPositionById(posId);
         List<Symptom> symptoms = symptomDAO.getSymptomsByPosId(posId);
 
         PosDisDAO posdisDAO = new PosDisDAO();
-        List<Disease> diseases = posdisDAO.getDiseasesByPosId(posId);
+        int typeId =0;
+        List<Disease> diseases = posdisDAO.getDiseasesByPosId(posId, typeId);
 
         SymDisDAO symDisDAO = new SymDisDAO();
 

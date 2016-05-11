@@ -213,6 +213,78 @@ public class DiseaseDAO {
             return null;
         }
     }
+    
+    
+    public List<Disease> getDisDiseasesByLabelId(int labelId) {
+        log.debug("get Diseases by labelId");
+
+        try {
+            List<Disease> objs = new ArrayList<Disease>();
+            String sql = "select * from disease where label_id = " + labelId + " and dis_type=0 order by dis_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            CLOB clob = null;
+            while (rs.next()) {
+                Disease obj = new Disease();
+                obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
+                obj.setDisName(rs.getString("dis_name"));
+                obj.setDisNameEn(rs.getString("dis_name_en"));
+                obj.setDisIntroduction(rs.getString("dis_introduction"));
+                //obj.setDisContent(rs.getString("dis_content"));
+                clob = (oracle.sql.CLOB) rs.getClob("dis_content");
+                obj.setDisContent(MyTools.ClobToString(clob));
+                obj.setDisImagePath(rs.getString("dis_image_path"));
+                obj.setLabelId(rs.getInt("label_id"));
+                clob = (oracle.sql.CLOB) rs.getClob("DIS_PREVENTION_CONTENT");
+                obj.setDisPreventionContent(MyTools.ClobToString(clob));
+                clob = (oracle.sql.CLOB) rs.getClob("DIS_SPECTRUM");
+                obj.setDisSpectrum(MyTools.ClobToString(clob));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    
+    public List<Disease> getBugDiseasesByLabelId(int labelId) {
+        log.debug("get Diseases by labelId");
+
+        try {
+            List<Disease> objs = new ArrayList<Disease>();
+            String sql = "select * from disease where label_id = " + labelId + " and dis_type=1 order by dis_id";
+            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            CLOB clob = null;
+            while (rs.next()) {
+                Disease obj = new Disease();
+                obj.setDisId(rs.getInt("dis_id"));
+                obj.setDisType(rs.getInt("dis_type"));
+                obj.setDisName(rs.getString("dis_name"));
+                obj.setDisNameEn(rs.getString("dis_name_en"));
+                obj.setDisIntroduction(rs.getString("dis_introduction"));
+                //obj.setDisContent(rs.getString("dis_content"));
+                clob = (oracle.sql.CLOB) rs.getClob("dis_content");
+                obj.setDisContent(MyTools.ClobToString(clob));
+                obj.setDisImagePath(rs.getString("dis_image_path"));
+                obj.setLabelId(rs.getInt("label_id"));
+                clob = (oracle.sql.CLOB) rs.getClob("DIS_PREVENTION_CONTENT");
+                obj.setDisPreventionContent(MyTools.ClobToString(clob));
+                clob = (oracle.sql.CLOB) rs.getClob("DIS_SPECTRUM");
+                obj.setDisSpectrum(MyTools.ClobToString(clob));
+                objs.add(obj);
+            }
+            dbm.close();
+            return objs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
     public List<Disease> getDiseasesByPosId(int posId) {
         log.debug("get All Disease by pos id");

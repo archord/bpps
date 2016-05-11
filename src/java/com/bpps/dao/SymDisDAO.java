@@ -274,12 +274,12 @@ public class SymDisDAO {
         dbm.close();
     }
 
-    public void addSymDisByDisId(int posId, int disId) {
+    public void addSymDisByDisId(DatabaseManager dbm, int posId, int disId) {
         log.debug("add symptom and disease status");
 
         SymptomDAO symptomDAO = new SymptomDAO();
-        List<Integer> symptoms = symptomDAO.getSymIdByPosId(posId);
-        DatabaseManager dbm = new DatabaseManager();
+        List<Integer> symptoms = symptomDAO.getSymIdByPosId(dbm, posId);
+//        DatabaseManager dbm = new DatabaseManager();
         try {
             String sql = "select * from symptom_disease where pos_id = " + posId + " and dis_id = " + disId;
             ResultSet rs = dbm.doSelect(sql);
@@ -292,7 +292,7 @@ public class SymDisDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        dbm.close();
+//        dbm.close();
     }
 
     public void addSymDisByPosDisSymId(int posId, int disId, int symId, String symDess[]) {
@@ -315,6 +315,15 @@ public class SymDisDAO {
         dbm.close();
     }
 
+    public void deleteSymDisByDisId(DatabaseManager dbm, int posId, int disId) {
+        log.debug("delete symptom and disease status");
+
+//        DatabaseManager dbm = new DatabaseManager();
+        String sql = "delete from symptom_disease where pos_id=" + posId + " and dis_id=" + disId;
+        dbm.doExecute(sql);
+//        dbm.close();
+    }
+
     public void deleteSymDisByPosDisSymId(int posId, int disId, int symId) {
         log.debug("delete symptom and disease status");
 
@@ -334,8 +343,8 @@ public class SymDisDAO {
 
         DatabaseManager dbm = new DatabaseManager();
         for (Integer position : positions) {
-            List<Integer> diseases = posDisDAO.getDisIdByPosId(position);
-            List<Integer> symptoms = symptomDAO.getSymIdByPosId(position);
+            List<Integer> diseases = posDisDAO.getDisIdByPosId(dbm, position);
+            List<Integer> symptoms = symptomDAO.getSymIdByPosId(dbm, position);
             for (Integer symptom : symptoms) {
                 for (Integer disease : diseases) {
                     try {

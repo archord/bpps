@@ -22,7 +22,7 @@
         <%
             int labelIdInt = Integer.parseInt(labelId);
             DiseaseDAO diseaseDAO = new DiseaseDAO();
-            List<Disease> diseases = diseaseDAO.getDiseasesByLabelId(labelIdInt);
+            List<Disease> diseases = diseaseDAO.getDisDiseasesByLabelId(labelIdInt);
 
             if (diseases == null || diseases.isEmpty()) {
                 out.print("<tr><td colspan=2>系统中暂时没有数据，请插入数据！</td></tr>");

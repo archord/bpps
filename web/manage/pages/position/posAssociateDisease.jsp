@@ -11,6 +11,7 @@
 <%@page import="com.bpps.pojo.Disease" %>
 <%@page import="java.util.List" %>
 <%@page import="com.bpps.dao.DiseaseDAO" %>
+<%@page import="com.jdbc.DatabaseManager" %>
 
 <%
 request.setCharacterEncoding("UTF-8");
@@ -95,8 +96,11 @@ String labelId = request.getParameter("labelId");
             out.print("</tr>");
         }
 
+        
+
+        DatabaseManager dbm = new DatabaseManager();
         for (Disease disease : diseases) {
-            List<Integer> checkedPositions = posdisDAO.getPosIdByDisId(disease.getDisId());
+            List<Integer> checkedPositions = posdisDAO.getPosIdByDisId(dbm, disease.getDisId());
             out.print("<tr>");
             out.print("<td ");
             out.print(tableHeadCss);
@@ -113,6 +117,7 @@ String labelId = request.getParameter("labelId");
             }
             out.print("</tr>");
         }
+        dbm.close();
         out.print("</table>");
 %>
             <div style="float: right; height: 30px;vertical-align: middle;">

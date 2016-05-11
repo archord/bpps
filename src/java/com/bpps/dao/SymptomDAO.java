@@ -61,6 +61,25 @@ public class SymptomDAO {
         }
     }
 
+    public List<Integer> getSymIdByPosId(DatabaseManager dbm, int posId) {
+        log.debug("get Symptoms by posid");
+
+        try {
+            List<Integer> objs = new ArrayList<Integer>();
+            String sql = "select sym_id from symptom where pos_id="+posId;
+//            DatabaseManager dbm = new DatabaseManager();
+            ResultSet rs = dbm.doSelect(sql);
+            while (rs.next()) {
+                objs.add(rs.getInt(1));
+            }
+//            dbm.close();
+            return objs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
     public List<Symptom> getSymptomsByPosId(int posId) {
         log.debug("get Symptoms by posid");
 

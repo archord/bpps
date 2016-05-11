@@ -35,7 +35,7 @@
             <table id="mainTable" >
                 <tr>
                     <td><%@include file="/WEB-INF/jspf/left.jspf"%></td>
-                    <td><%@include file="/WEB-INF/jspf/preventionList.jspf"%></td>
+                    <td><%@include file="/WEB-INF/jspf/preventionDisList.jspf"%></td>
                 </tr>
             </table>
         </div>

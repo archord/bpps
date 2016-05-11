@@ -1,0 +1,52 @@
+<%@page import="com.util.MyTools"%>
+<%@page import="java.util.List"%>
+<%@page import="com.bpps.pojo.Disease"%>
+<%@page import="com.bpps.dao.DiseaseDAO"%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+    String labelId = request.getParameter("labelId");
+%>
+
+<div id="mainCenter">
+
+    <div id="article_header">
+        病害防治——病害列表
+    </div>
+    <table>
+        <tr>
+            <th style="text-align: center;text-height: 25px; font-size: 16px; color: black;font-weight: bold;">病害名称</th>
+            <th style="text-align: center;font-size: 16px; color: black;font-weight: bold;">病害防治信息简介</th></tr>
+
+        <%
+            int labelIdInt = Integer.parseInt(labelId);
+            DiseaseDAO diseaseDAO = new DiseaseDAO();
+            List<Disease> diseases = diseaseDAO.getBugDiseasesByLabelId(labelIdInt);
+
+            if (diseases == null || diseases.isEmpty()) {
+                out.print("<tr><td colspan=2>系统中暂时没有数据，请插入数据！</td></tr>");
+            } else {
+                for (Disease disease : diseases) {
+                    out.print("<tr><td style=\"text-align: center;width: 25%;height:30px;\"><a href='");
+                    out.print(request.getContextPath());
+                    out.print("/functionPage/preventionDetail.jsp?disId=");
+                    out.print(disease.getDisId());
+                    out.print("'  target=\"preventionPage\">");
+                    out.print(disease.getDisName());
+                    out.print("</a></td><td style=\"text-align: left;;width: 75%;\">");
+                    String tmp = MyTools.splitAndFilterString(disease.getDisPreventionContent(), 40);
+                    out.print(tmp);
+//                    if(tmp.length()<60){
+//                        out.print(tmp);
+//                    }else{
+//                        out.print(tmp.substring(0, 60)+"...");
+//                    }
+                    
+                    out.print("</td></tr>");
+                }
+            }
+        %>
+
+    </table>
+</div>
