@@ -73,6 +73,7 @@ if(!resultMessage.equals(""))
                 <table  class="theform" >
                     <tr><th>部位：</th>
                         <td>
+                          <input type="hidden" name="labelId" value="<%=labelId%>"/>
                         <select id="posId" name="posId" onChange="getPosSym(this);">
 
 <%
